@@ -1,0 +1,51 @@
+{
+  "systemPrompt": "Bạn là Cố vấn học tập AI chuyên nghiệp của nền tảng tự học tin học DewSkill, biểu tượng là chú Giọt Nước thân thiện. Hãy xưng hô 'mình' hoặc 'DewSkill' và gọi người hỏi là 'bạn'. Tư vấn nhiệt tình, ngắn gọn, súc tích, chuyên nghiệp và khuyến khích bạn ấy đăng ký học thử miễn phí hoặc để lại thông tin để được hỗ trợ.",
+  "apiKey": "",
+  "provider": "builtin",
+  "faqs": [
+    {
+      "id": "faq-1",
+      "question": "Có được học thử miễn phí không?",
+      "answer": "Có bạn nhé! DewSkill có cổng học thử 100% miễn phí. Bạn chỉ cần bấm nút 'Đăng ký' hoặc 'Học thử miễn phí' trên trang web là có thể vào trải nghiệm ngay Chặng 1, làm bài tập và tích lũy XP mà không mất bất kỳ chi phí ban đầu nào.",
+      "keywords": ["học thử", "miễn phí", "free", "thử nghiệm", "test thử", "trải nghiệm"]
+    },
+    {
+      "id": "faq-2",
+      "question": "Học phí các khóa học như thế nào?",
+      "answer": "Các khóa tự học của DewSkill có mức học phí cực kỳ ưu đãi, dao động từ 399.000đ đến 999.000đ (trọn gói đầy đủ Word, Excel, PowerPoint từ cơ bản đến nâng cao). Tài khoản được cấp quyền truy cập trọn đời, tự học mọi lúc mọi nơi và có AI đồng hành chấm điểm liên tục.",
+      "keywords": ["học phí", "giá", "bao nhiêu tiền", "chi phí", "học phí bao nhiêu", "bảng giá"]
+    },
+    {
+      "id": "faq-3",
+      "question": "Hình thức học như thế nào?",
+      "answer": "DewSkill áp dụng mô hình tự học tương tác thông minh (Gamified Self-Learning): Bạn sẽ học theo từng chặng rõ ràng, xem video bài giảng ngắn 3-5 phút súc tích có câu hỏi dừng bài, sau đó làm bài tập thực hành. Hệ thống AI sẽ chấm điểm tức thì sau 1 giây, đưa ra gợi ý logic và cộng điểm XP thăng hạng.",
+      "keywords": ["học như thế nào", "hình thức học", "cách học", "phương pháp", "học ra sao", "tự học"]
+    },
+    {
+      "id": "faq-4",
+      "question": "Làm thế nào để đăng ký tài khoản?",
+      "answer": "Rất đơn giản! Bạn chỉ cần bấm vào nút 'Đăng ký' ở góc trên màn hình hoặc nút 'Học thử miễn phí ngay'. Hệ thống sẽ chuyển sang cổng LMS để bạn tạo tài khoản nhanh chóng chỉ bằng số điện thoại trong 30 giây.",
+      "keywords": ["đăng ký", "tạo tài khoản", "đăng ký học", "mở tài khoản", "lập nick"]
+    },
+    {
+      "id": "faq-5",
+      "question": "AI chấm điểm và gợi ý hoạt động ra sao?",
+      "answer": "AI của DewSkill tự động chấm điểm tức thì cho 6 dạng bài tập (trắc nghiệm, điền từ, sắp xếp thao tác, nối cột...). Khi bạn phân vân, bạn có thể bấm nút '💡 Gợi ý' để AI hướng dẫn cách tư duy và loại trừ phương án sai mà không làm lộ ngay đáp án.",
+      "keywords": ["ai", "chấm điểm", "gợi ý", "thông minh", "ai chấm"]
+    },
+    {
+      "id": "faq-6",
+      "question": "Có những khóa học nào?",
+      "answer": "DewSkill tập trung vào các kỹ năng tin học thực chiến cốt lõi: Windows cơ bản, Microsoft Word thực hành văn phòng, Microsoft Excel từ cơ bản đến xử lý dữ liệu nâng cao, PowerPoint thuyết trình chuyên nghiệp, và luyện thi chứng chỉ tin học quốc tế (MOS, IC3).",
+      "keywords": ["khóa học", "danh sách khóa", "môn học", "excel", "word", "powerpoint", "dạy những gì", "dạy môn gì", "học môn nào", "có những khóa nào", "các môn"]
+    },
+    {
+      "id": "faq-7",
+      "question": "Liên hệ hỗ trợ hoặc tư vấn viên ở đâu?",
+      "answer": "Bạn có thể để lại số điện thoại ở phần 'Nhận tư vấn' ở cuối trang web, hoặc chat Zalo / gọi trực tiếp tới Hotline của trung tâm để được đội ngũ tuyển sinh hỗ trợ 1-1 nhé!",
+      "keywords": ["liên hệ", "hotline", "zalo", "tư vấn viên", "số điện thoại", "gặp người"]
+    }
+  ],
+  "customKnowledge": "DewSkill là nền tảng tự học tin học thế hệ mới của trung tâm Thắng Tin Học. Điểm đặc biệt: Học như chơi game, có linh vật giọt nước đồng hành, tích lũy XP, chuỗi ngày streak, video ngắn không buồn ngủ, AI chấm điểm phản hồi tức thì."
+}
+

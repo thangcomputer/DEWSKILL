@@ -1,0 +1,35 @@
+[
+  {
+    "id": "poster-sample-1",
+    "title": "Bắt đầu tự học tin học miễn phí",
+    "summary": "Tạo tài khoản, vào lộ trình chặng đầu tiên và nhận XP ngay hôm nay.",
+    "category": "Ưu đãi",
+    "image": "",
+    "link": "",
+    "pinned": true,
+    "published": true,
+    "createdAt": "2026-11-09T00:00:00.000Z"
+  },
+  {
+    "id": "poster-sample-2",
+    "title": "Giữ chuỗi ngày học, nhận huy hiệu",
+    "summary": "Mỗi ngày luyện 10 câu và xem 1 video để giữ lửa chuỗi ngày.",
+    "category": "Mẹo học",
+    "image": "",
+    "link": "",
+    "pinned": false,
+    "published": true,
+    "createdAt": "2026-11-09T00:00:00.000Z"
+  },
+  {
+    "id": "poster-22157fdf2d",
+    "createdAt": "2026-11-09T05:14:00.961Z",
+    "title": "bài mới nhất đây",
+    "summary": "fasdfsfasdfasdf",
+    "category": "Ưu đãi",
+    "image": "/api/uploads/1794201239766-21247d62.png",
+    "link": "",
+    "pinned": false,
+    "published": true
+  }
+]

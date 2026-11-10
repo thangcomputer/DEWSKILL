@@ -1,0 +1,8 @@
+node_modules
+.next
+.env
+.env.local
+# Dữ liệu phát sinh khi chạy (liên hệ khách, ảnh tải lên) không đưa lên git
+data/leads.json
+data/uploads/
+

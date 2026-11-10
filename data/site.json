@@ -1,0 +1,17 @@
+{
+  "lmsUrl": "http://localhost:5173",
+  "brandName": "DewSkill",
+  "logoUrl": "/api/uploads/1794203736795-795566a1.webp",
+  "faviconUrl": "/api/uploads/1794208116957-0163f0e6.webp",
+  "copyright": "© 2026 DewSkill. Bản quyền thuộc về Thắng Tin Học.",
+  "hotline": "0984 623 486",
+  "zaloUrl": "https://zalo.me/0984623486",
+  "facebookUrl": "https://facebook.com/thaythangdaytinhoc",
+  "youtubeUrl": "https://www.youtube.com/@thaythangdaytinhoc",
+  "tiktokUrl": "https://tiktok.com/@thaythangdaytinhoc",
+  "appStoreUrl": "https://apps.apple.com",
+  "googlePlayUrl": "https://play.google.com",
+  "heroTitle": "Học tin học như chơi game, tự tin thành thạo cùng DewSkill",
+  "heroSubtitle": "Lộ trình rõ ràng, tích XP mỗi ngày, video ngắn có câu hỏi ngay trong bài và chấm điểm tức thì. Chú giọt nước luôn học cùng bạn.",
+  "footerNote": "DewSkill là nền tảng tự học tin học thế hệ mới. Học qua thực hành, video tương tác và trợ lý AI đồng hành từng chặng."
+}

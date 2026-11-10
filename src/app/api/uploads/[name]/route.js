@@ -1,0 +1,21 @@
+import { promises as fs } from 'fs';
+import path from 'path';
+import { UPLOAD_DIR } from '@/lib/store';
+
+const MIME = { '.jpg': 'image/jpeg', '.png': 'image/png', '.webp': 'image/webp', '.gif': 'image/gif' };
+
+/** Phục vụ ảnh poster đã tải lên (lưu ngoài public để chạy production vẫn thấy ảnh mới). */
+export async function GET(_request, { params }) {
+  const name = path.basename(params.name || '');
+  const type = MIME[path.extname(name).toLowerCase()];
+  if (!type) return new Response('Not found', { status: 404 });
+  try {
+    const buffer = await fs.readFile(path.join(UPLOAD_DIR, name));
+    return new Response(buffer, {
+      headers: { 'Content-Type': type, 'Cache-Control': 'public, max-age=86400' },
+    });
+  } catch {
+    return new Response('Not found', { status: 404 });
+  }
+}
+
