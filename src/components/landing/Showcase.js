@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { ArrowRight, Bot, CheckCircle2, ChevronRight, Map, PlayCircle, Sparkles, Zap } from 'lucide-react';
 import Mascot from './Mascot';
 import { lmsLink } from '@/lib/lms';
@@ -55,6 +55,7 @@ const TABS = [
 
 export default function Showcase({ site, lmsUrl }) {
   const [activeTab, setActiveTab] = useState('path');
+  const isPausedRef = useRef(false);
 
   const tabs = TABS.map((tab) => {
     if (tab.id === 'path') return { ...tab, image: site?.showcasePathImage || tab.image };
@@ -62,6 +63,37 @@ export default function Showcase({ site, lmsUrl }) {
     if (tab.id === 'ai') return { ...tab, image: site?.showcaseAiImage || tab.image };
     return tab;
   });
+
+  const nextTab = useCallback(() => {
+    setActiveTab((prev) => {
+      const idx = TABS.findIndex((t) => t.id === prev);
+      const nextIdx = (idx + 1) % TABS.length;
+      return TABS[nextIdx].id;
+    });
+  }, []);
+
+  // Tự động chuyển tab mỗi 3 giây, tạm dừng khi rê chuột vào nội dung
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (!isPausedRef.current) {
+        nextTab();
+      }
+    }, 3000);
+
+    return () => clearInterval(timer);
+  }, [nextTab]);
+
+  const handleMouseEnter = () => {
+    isPausedRef.current = true;
+  };
+
+  const handleMouseLeave = () => {
+    isPausedRef.current = false;
+  };
+
+  const handleTabClick = (tabId) => {
+    setActiveTab(tabId);
+  };
 
   const current = tabs.find((t) => t.id === activeTab) || tabs[0];
 
@@ -85,7 +117,13 @@ export default function Showcase({ site, lmsUrl }) {
         </div>
 
         {/* Tab Switcher Buttons */}
-        <div className="reveal delay-100 mt-10 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+        <div
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          onPointerEnter={handleMouseEnter}
+          onPointerLeave={handleMouseLeave}
+          className="reveal delay-100 mt-10 flex flex-wrap items-center justify-center gap-2 sm:gap-3"
+        >
           {TABS.map((tab) => {
             const Icon = tab.icon;
             const active = tab.id === activeTab;
@@ -93,8 +131,8 @@ export default function Showcase({ site, lmsUrl }) {
               <button
                 key={tab.id}
                 type="button"
-                onClick={() => setActiveTab(tab.id)}
-                className={`inline-flex items-center gap-2.5 rounded-full px-5 py-3 text-sm font-extrabold transition-all active:scale-95 ${
+                onClick={() => handleTabClick(tab.id)}
+                className={`inline-flex items-center gap-2.5 rounded-full px-5 py-3 text-sm font-extrabold transition-all cursor-pointer active:scale-95 ${
                   active
                     ? 'bg-dew-600 text-white shadow-lg shadow-dew-600/30 ring-2 ring-dew-400'
                     : 'border border-slate-200 bg-white text-slate-700 hover:border-dew-300 hover:bg-dew-50/60'
@@ -108,7 +146,13 @@ export default function Showcase({ site, lmsUrl }) {
         </div>
 
         {/* Showcase Content Card */}
-        <div className="reveal-scale delay-200 glass mt-10 grid items-center gap-10 overflow-hidden rounded-[2.5rem] p-6 shadow-2xl shadow-dew-950/5 sm:p-10 lg:grid-cols-[1.1fr_1.3fr]">
+        <div
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          onPointerEnter={handleMouseEnter}
+          onPointerLeave={handleMouseLeave}
+          className="reveal-scale delay-200 glass mt-10 grid items-center gap-10 overflow-hidden rounded-[2.5rem] p-6 shadow-2xl shadow-dew-950/5 sm:p-10 lg:grid-cols-[1.1fr_1.3fr]"
+        >
           {/* Left Text Column */}
           <div>
             <span className="inline-flex items-center gap-1.5 rounded-full bg-dew-100 px-3 py-1 text-xs font-extrabold text-dew-800">
