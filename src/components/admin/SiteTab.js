@@ -4,6 +4,20 @@ import { useEffect, useState } from 'react';
 import { Upload, X, RefreshCw, Globe, Image as ImageIcon, Sparkles, Smartphone, Share2, HelpCircle, Key, Lock, ShieldCheck, Copy, Check, Eye, EyeOff } from 'lucide-react';
 import { adminFetch } from './adminFetch';
 
+function isVideoMedia(url) {
+  if (!url || typeof url !== 'string') return false;
+  const clean = url.split('?')[0].toLowerCase();
+  return (
+    clean.endsWith('.mp4') ||
+    clean.endsWith('.webm') ||
+    clean.endsWith('.ogv') ||
+    clean.endsWith('.mov') ||
+    clean.includes('youtube.com') ||
+    clean.includes('youtu.be') ||
+    clean.includes('vimeo.com')
+  );
+}
+
 export default function SiteTab() {
   const [form, setForm] = useState(null);
   const [message, setMessage] = useState('');
@@ -273,22 +287,22 @@ export default function SiteTab() {
         </div>
       </div>
 
-      {/* KHỐI 2: HÌNH ẢNH CÁC PHẦN TRÊN TRANG CHỦ (SHOWCASE THỰC TẾ) */}
+      {/* KHỐI 2: HÌNH ẢNH HOẶC VIDEO CÁC PHẦN TRÊN TRANG CHỦ (SHOWCASE THỰC TẾ) */}
       <div className="glass rounded-drop p-6">
         <div className="mb-4 flex items-center justify-between border-b border-dew-100 pb-3">
           <div className="flex items-center gap-2">
             <ImageIcon className="text-dew-700" size={20} />
             <h3 className="text-base font-black text-dew-900">
-              2. Hình ảnh minh họa các tính năng (Showcase thực tế trên trang chủ)
+              2. Hình ảnh hoặc Video minh họa các tính năng (Showcase thực tế trên trang chủ)
             </h3>
           </div>
           <span className="text-xs font-semibold text-slate-500 hidden sm:inline">
-            Khung ảnh hiển thị trong mockup trình duyệt của 3 tab
+            Khung hiển thị trong mockup trình duyệt của 3 tab
           </span>
         </div>
 
         <p className="mb-4 text-xs font-medium text-slate-600 leading-relaxed">
-          Tải ảnh chụp màn hình thực tế giao diện học tập để thay thế ảnh minh họa ở phần &quot;Trải nghiệm học tập thực chiến&quot;. Khuyến nghị tỉ lệ 16:10 hoặc 4:3 (kích thước khoảng 1200x800px).
+          Tải ảnh chụp màn hình hoặc video thực tế (MP4, WebM) để hiển thị trong khung trình duyệt ở phần &quot;Trải nghiệm học tập thực tế&quot;. Hỗ trợ tải trực tiếp video/ảnh lên máy chủ hoặc dán đường dẫn video YouTube.
         </p>
 
         <div className="grid gap-5 md:grid-cols-3">
@@ -308,23 +322,37 @@ export default function SiteTab() {
                 ) : null}
               </div>
 
-              {/* Preview */}
-              <div className="mb-3 flex h-36 items-center justify-center rounded-xl bg-slate-900/5 border border-dashed border-dew-200 overflow-hidden p-1.5">
-                <img
-                  src={form.showcasePathImage || '/screenshots/lo-trinh-chang.png'}
-                  alt="Lộ trình từng chặng"
-                  className="h-full w-full object-cover rounded-lg"
-                />
+              {/* Preview Image or Video */}
+              <div className="relative mb-3 flex h-36 items-center justify-center rounded-xl bg-slate-950 border border-dashed border-dew-200 overflow-hidden p-1">
+                {isVideoMedia(form.showcasePathImage || '/screenshots/lo-trinh-chang.png') ? (
+                  <video
+                    src={form.showcasePathImage || '/screenshots/lo-trinh-chang.png'}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="h-full w-full object-cover rounded-lg"
+                  />
+                ) : (
+                  <img
+                    src={form.showcasePathImage || '/screenshots/lo-trinh-chang.png'}
+                    alt="Lộ trình từng chặng"
+                    className="h-full w-full object-cover rounded-lg"
+                  />
+                )}
+                <span className="absolute bottom-2 left-2 rounded-md bg-black/75 px-1.5 py-0.5 text-[10px] font-bold text-white shadow-xs">
+                  {isVideoMedia(form.showcasePathImage || '/screenshots/lo-trinh-chang.png') ? '📹 Video' : '🖼️ Ảnh'}
+                </span>
               </div>
             </div>
 
             <div className="flex flex-col gap-2">
               <label className="flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-dew-300 bg-dew-50 px-3 py-2 text-xs font-extrabold text-dew-800 hover:bg-dew-100 transition">
                 <Upload size={14} />
-                <span>{uploadingShowcase.showcasePathImage ? 'Đang tải...' : 'Tải ảnh Lộ trình lên'}</span>
+                <span>{uploadingShowcase.showcasePathImage ? 'Đang tải...' : 'Tải Ảnh hoặc Video lên'}</span>
                 <input
                   type="file"
-                  accept="image/png,image/jpeg,image/webp"
+                  accept="image/png,image/jpeg,image/webp,image/gif,video/mp4,video/webm,video/quicktime"
                   className="hidden"
                   onChange={(e) => {
                     const file = e.target.files?.[0];
@@ -335,7 +363,7 @@ export default function SiteTab() {
               <input
                 className="field text-xs py-1"
                 value={form.showcasePathImage || ''}
-                placeholder="/screenshots/lo-trinh-chang.png"
+                placeholder="Đường dẫn ảnh hoặc link video MP4/YouTube"
                 onChange={(e) => setForm({ ...form, showcasePathImage: e.target.value })}
               />
             </div>
@@ -357,23 +385,37 @@ export default function SiteTab() {
                 ) : null}
               </div>
 
-              {/* Preview */}
-              <div className="mb-3 flex h-36 items-center justify-center rounded-xl bg-slate-900/5 border border-dashed border-dew-200 overflow-hidden p-1.5">
-                <img
-                  src={form.showcaseVideoImage || '/screenshots/video-bai-giang.png'}
-                  alt="Video bài giảng tương tác"
-                  className="h-full w-full object-cover rounded-lg"
-                />
+              {/* Preview Image or Video */}
+              <div className="relative mb-3 flex h-36 items-center justify-center rounded-xl bg-slate-950 border border-dashed border-dew-200 overflow-hidden p-1">
+                {isVideoMedia(form.showcaseVideoImage || '/screenshots/video-bai-giang.png') ? (
+                  <video
+                    src={form.showcaseVideoImage || '/screenshots/video-bai-giang.png'}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="h-full w-full object-cover rounded-lg"
+                  />
+                ) : (
+                  <img
+                    src={form.showcaseVideoImage || '/screenshots/video-bai-giang.png'}
+                    alt="Video bài giảng tương tác"
+                    className="h-full w-full object-cover rounded-lg"
+                  />
+                )}
+                <span className="absolute bottom-2 left-2 rounded-md bg-black/75 px-1.5 py-0.5 text-[10px] font-bold text-white shadow-xs">
+                  {isVideoMedia(form.showcaseVideoImage || '/screenshots/video-bai-giang.png') ? '📹 Video' : '🖼️ Ảnh'}
+                </span>
               </div>
             </div>
 
             <div className="flex flex-col gap-2">
               <label className="flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-dew-300 bg-dew-50 px-3 py-2 text-xs font-extrabold text-dew-800 hover:bg-dew-100 transition">
                 <Upload size={14} />
-                <span>{uploadingShowcase.showcaseVideoImage ? 'Đang tải...' : 'Tải ảnh Video lên'}</span>
+                <span>{uploadingShowcase.showcaseVideoImage ? 'Đang tải...' : 'Tải Ảnh hoặc Video lên'}</span>
                 <input
                   type="file"
-                  accept="image/png,image/jpeg,image/webp"
+                  accept="image/png,image/jpeg,image/webp,image/gif,video/mp4,video/webm,video/quicktime"
                   className="hidden"
                   onChange={(e) => {
                     const file = e.target.files?.[0];
@@ -384,7 +426,7 @@ export default function SiteTab() {
               <input
                 className="field text-xs py-1"
                 value={form.showcaseVideoImage || ''}
-                placeholder="/screenshots/video-bai-giang.png"
+                placeholder="Đường dẫn ảnh hoặc link video MP4/YouTube"
                 onChange={(e) => setForm({ ...form, showcaseVideoImage: e.target.value })}
               />
             </div>
@@ -406,23 +448,37 @@ export default function SiteTab() {
                 ) : null}
               </div>
 
-              {/* Preview */}
-              <div className="mb-3 flex h-36 items-center justify-center rounded-xl bg-slate-900/5 border border-dashed border-dew-200 overflow-hidden p-1.5">
-                <img
-                  src={form.showcaseAiImage || '/screenshots/ai-cham-diem.png'}
-                  alt="AI chấm điểm và gợi ý"
-                  className="h-full w-full object-cover rounded-lg"
-                />
+              {/* Preview Image or Video */}
+              <div className="relative mb-3 flex h-36 items-center justify-center rounded-xl bg-slate-950 border border-dashed border-dew-200 overflow-hidden p-1">
+                {isVideoMedia(form.showcaseAiImage || '/screenshots/ai-cham-diem.png') ? (
+                  <video
+                    src={form.showcaseAiImage || '/screenshots/ai-cham-diem.png'}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="h-full w-full object-cover rounded-lg"
+                  />
+                ) : (
+                  <img
+                    src={form.showcaseAiImage || '/screenshots/ai-cham-diem.png'}
+                    alt="AI chấm điểm và gợi ý"
+                    className="h-full w-full object-cover rounded-lg"
+                  />
+                )}
+                <span className="absolute bottom-2 left-2 rounded-md bg-black/75 px-1.5 py-0.5 text-[10px] font-bold text-white shadow-xs">
+                  {isVideoMedia(form.showcaseAiImage || '/screenshots/ai-cham-diem.png') ? '📹 Video' : '🖼️ Ảnh'}
+                </span>
               </div>
             </div>
 
             <div className="flex flex-col gap-2">
               <label className="flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-dew-300 bg-dew-50 px-3 py-2 text-xs font-extrabold text-dew-800 hover:bg-dew-100 transition">
                 <Upload size={14} />
-                <span>{uploadingShowcase.showcaseAiImage ? 'Đang tải...' : 'Tải ảnh AI lên'}</span>
+                <span>{uploadingShowcase.showcaseAiImage ? 'Đang tải...' : 'Tải Ảnh hoặc Video lên'}</span>
                 <input
                   type="file"
-                  accept="image/png,image/jpeg,image/webp"
+                  accept="image/png,image/jpeg,image/webp,image/gif,video/mp4,video/webm,video/quicktime"
                   className="hidden"
                   onChange={(e) => {
                     const file = e.target.files?.[0];
@@ -433,7 +489,7 @@ export default function SiteTab() {
               <input
                 className="field text-xs py-1"
                 value={form.showcaseAiImage || ''}
-                placeholder="/screenshots/ai-cham-diem.png"
+                placeholder="Đường dẫn ảnh hoặc link video MP4/YouTube"
                 onChange={(e) => setForm({ ...form, showcaseAiImage: e.target.value })}
               />
             </div>

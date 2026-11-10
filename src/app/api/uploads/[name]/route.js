@@ -2,7 +2,19 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import { UPLOAD_DIR } from '@/lib/store';
 
-const MIME = { '.jpg': 'image/jpeg', '.png': 'image/png', '.webp': 'image/webp', '.gif': 'image/gif' };
+const MIME = {
+  '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.png': 'image/png',
+  '.webp': 'image/webp',
+  '.gif': 'image/gif',
+  '.svg': 'image/svg+xml',
+  '.ico': 'image/x-icon',
+  '.mp4': 'video/mp4',
+  '.webm': 'video/webm',
+  '.ogv': 'video/ogg',
+  '.mov': 'video/quicktime',
+};
 
 /** Phục vụ ảnh poster đã tải lên (lưu ngoài public để chạy production vẫn thấy ảnh mới). */
 export async function GET(_request, { params }) {

@@ -53,6 +53,29 @@ const TABS = [
   },
 ];
 
+function isVideoMedia(url) {
+  if (!url || typeof url !== 'string') return false;
+  const clean = url.split('?')[0].toLowerCase();
+  return (
+    clean.endsWith('.mp4') ||
+    clean.endsWith('.webm') ||
+    clean.endsWith('.ogv') ||
+    clean.endsWith('.mov') ||
+    clean.includes('youtube.com') ||
+    clean.includes('youtu.be') ||
+    clean.includes('vimeo.com')
+  );
+}
+
+function getYouTubeEmbedUrl(url) {
+  if (!url) return null;
+  const ytMatch = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
+  if (ytMatch && ytMatch[1]) {
+    return `https://www.youtube-nocookie.com/embed/${ytMatch[1]}?autoplay=1&mute=1&loop=1&playlist=${ytMatch[1]}&controls=0&showinfo=0&rel=0`;
+  }
+  return null;
+}
+
 export default function Showcase({ site, lmsUrl }) {
   const [activeTab, setActiveTab] = useState('path');
   const isPausedRef = useRef(false);
@@ -201,14 +224,38 @@ export default function Showcase({ site, lmsUrl }) {
                 <div className="w-10" />
               </div>
 
-              {/* Screenshot Image with Smooth Aspect */}
-              <div className="relative aspect-[4/3] bg-slate-100">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={current.image}
-                  alt={current.alt}
-                  className="h-full w-full object-cover object-top transition-all duration-300"
-                />
+              {/* Screenshot Media (Hỗ trợ cả Video & Hình ảnh) with Smooth Aspect */}
+              <div className="relative aspect-[4/3] bg-slate-900 overflow-hidden">
+                {isVideoMedia(current.image) ? (
+                  getYouTubeEmbedUrl(current.image) ? (
+                    <iframe
+                      key={current.image}
+                      src={getYouTubeEmbedUrl(current.image)}
+                      title={current.title}
+                      className="h-full w-full object-cover border-0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  ) : (
+                    <video
+                      key={current.image}
+                      src={current.image}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="h-full w-full object-cover object-top"
+                    />
+                  )
+                ) : (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img
+                    key={current.image}
+                    src={current.image}
+                    alt={current.alt}
+                    className="h-full w-full object-cover object-top transition-all duration-300"
+                  />
+                )}
               </div>
             </div>
 
