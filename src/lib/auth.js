@@ -2,6 +2,9 @@
 import crypto from 'crypto';
 import { cookies } from 'next/headers';
 
+import { getSite } from './store';
+import { verifyTotpToken } from './totp';
+
 const COOKIE = 'dew_admin';
 const MAX_AGE_SEC = 60 * 60 * 12;
 
@@ -19,9 +22,21 @@ function safeEqual(a, b) {
   return ab.length === bb.length && crypto.timingSafeEqual(ab, bb);
 }
 
-export function checkPassword(input) {
-  const expected = process.env.ADMIN_PASSWORD || 'dewskill-admin';
+export async function checkPassword(input) {
+  const site = await getSite().catch(() => ({}));
+  const expected = site.adminPassword || process.env.ADMIN_PASSWORD || 'admin123';
   return safeEqual(input || '', expected);
+}
+
+export async function isTotpRequired() {
+  const site = await getSite().catch(() => ({}));
+  return Boolean(site.adminTotpEnabled && site.adminTotpSecret);
+}
+
+export async function verifyAdminTotp(code) {
+  const site = await getSite().catch(() => ({}));
+  if (!site.adminTotpEnabled || !site.adminTotpSecret) return true;
+  return verifyTotpToken(site.adminTotpSecret, code);
 }
 
 export function startSession() {

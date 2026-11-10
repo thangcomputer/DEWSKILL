@@ -13,5 +13,13 @@
   "googlePlayUrl": "https://play.google.com",
   "heroTitle": "Học tin học như chơi game, tự tin thành thạo cùng DewSkill",
   "heroSubtitle": "Lộ trình rõ ràng, tích XP mỗi ngày, video ngắn có câu hỏi ngay trong bài và chấm điểm tức thì. Chú giọt nước luôn học cùng bạn.",
-  "footerNote": "DewSkill là nền tảng tự học tin học thế hệ mới. Học qua thực hành, video tương tác và trợ lý AI đồng hành từng chặng."
+  "footerNote": "DewSkill là nền tảng tự học tin học thế hệ mới. Học qua thực hành, video tương tác và trợ lý AI đồng hành từng chặng.",
+  "adminPassword": "",
+  "googleClientId": "",
+  "googleClientSecret": "",
+  "facebookAppId": "",
+  "facebookAppSecret": "",
+  "adminTotpSecret": "",
+  "adminTotpEnabled": false,
+  "updatedAt": 1794284865160
 }

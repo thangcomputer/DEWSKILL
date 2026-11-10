@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Upload, X, RefreshCw, Globe, Image as ImageIcon, Sparkles, Smartphone, Share2, HelpCircle } from 'lucide-react';
+import { Upload, X, RefreshCw, Globe, Image as ImageIcon, Sparkles, Smartphone, Share2, HelpCircle, Key, Lock, ShieldCheck, Copy, Check, Eye, EyeOff } from 'lucide-react';
 import { adminFetch } from './adminFetch';
 
 export default function SiteTab() {
@@ -9,6 +9,69 @@ export default function SiteTab() {
   const [message, setMessage] = useState('');
   const [uploadingLogo, setUploadingLogo] = useState(false);
   const [uploadingFavicon, setUploadingFavicon] = useState(false);
+  const [showAdminPassword, setShowAdminPassword] = useState(false);
+  const [showGoogleSecret, setShowGoogleSecret] = useState(false);
+  const [copiedUri, setCopiedUri] = useState(false);
+  const [totpSetup, setTotpSetup] = useState(null);
+  const [totpCodeInput, setTotpCodeInput] = useState('');
+  const [disableCodeInput, setDisableCodeInput] = useState('');
+  const [showDisableTotp, setShowDisableTotp] = useState(false);
+  const [totpLoading, setTotpLoading] = useState(false);
+  const [totpError, setTotpError] = useState('');
+  const [copiedSecret, setCopiedSecret] = useState(false);
+
+  async function startTotpSetup() {
+    setTotpLoading(true);
+    setTotpError('');
+    try {
+      const res = await adminFetch('/api/admin/2fa?action=setup');
+      setTotpSetup(res.data);
+      setTotpCodeInput('');
+    } catch (err) {
+      setTotpError(err.message);
+    } finally {
+      setTotpLoading(false);
+    }
+  }
+
+  async function confirmTotpActivation() {
+    if (!totpSetup || !totpCodeInput) return;
+    setTotpLoading(true);
+    setTotpError('');
+    try {
+      await adminFetch('/api/admin/2fa', {
+        method: 'POST',
+        body: { secret: totpSetup.secret, code: totpCodeInput },
+      });
+      setForm((prev) => ({ ...prev, adminTotpEnabled: true }));
+      setTotpSetup(null);
+      setMessage('Đã kích hoạt Google Authenticator thành công! Mỗi lần đăng nhập sẽ yêu cầu mã.');
+    } catch (err) {
+      setTotpError(err.message);
+    } finally {
+      setTotpLoading(false);
+    }
+  }
+
+  async function handleDisableTotp() {
+    if (!disableCodeInput) return;
+    setTotpLoading(true);
+    setTotpError('');
+    try {
+      await adminFetch('/api/admin/2fa', {
+        method: 'POST',
+        body: { action: 'disable', code: disableCodeInput },
+      });
+      setForm((prev) => ({ ...prev, adminTotpEnabled: false }));
+      setShowDisableTotp(false);
+      setDisableCodeInput('');
+      setMessage('Đã tắt Google Authenticator.');
+    } catch (err) {
+      setTotpError(err.message);
+    } finally {
+      setTotpLoading(false);
+    }
+  }
 
   useEffect(() => {
     adminFetch('/api/admin/site')
@@ -37,7 +100,10 @@ export default function SiteTab() {
     event.preventDefault();
     setMessage('');
     try {
-      await adminFetch('/api/admin/site', { method: 'PUT', body: form });
+      const res = await adminFetch('/api/admin/site', { method: 'PUT', body: form });
+      if (res?.data) {
+        setForm(res.data);
+      }
       setMessage('Đã lưu cấu hình thành công! Hãy tải lại trang chủ để xem thay đổi.');
     } catch (err) {
       setMessage(err.message);
@@ -332,6 +398,303 @@ export default function SiteTab() {
               placeholder="https://apps.apple.com/app/..."
               onChange={(e) => setForm({ ...form, appStoreUrl: e.target.value })}
             />
+          </label>
+        </div>
+      </div>
+
+      {/* KHỐI 6: BẢO MẬT & MẬT KHẨU QUẢN TRỊ ADMIN */}
+      <div className="glass rounded-drop p-6">
+        <div className="mb-4 flex items-center justify-between border-b border-dew-100 pb-3 flex-wrap gap-2">
+          <div className="flex items-center gap-2">
+            <Lock className="text-dew-700" size={20} />
+            <h3 className="text-base font-black text-dew-900">
+              6. Bảo mật & Mật khẩu Quản trị Admin
+            </h3>
+          </div>
+          {form.hasAdminPassword ? (
+            <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-bold text-emerald-700 border border-emerald-200">
+              <ShieldCheck size={13} className="text-emerald-600" />
+              Đang dùng mật khẩu quản trị riêng
+            </span>
+          ) : (
+            <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2.5 py-1 text-xs font-bold text-amber-700 border border-amber-200">
+              <Key size={13} className="text-amber-600" />
+              Đang dùng mật khẩu mặc định (admin123)
+            </span>
+          )}
+        </div>
+
+        <div className="max-w-md">
+          <label className="grid gap-1.5 text-sm font-extrabold text-slate-700">
+            <span>Đặt mật khẩu Admin mới</span>
+            <div className="relative flex items-center">
+              <input
+                type={showAdminPassword ? 'text' : 'password'}
+                className="field pr-10"
+                value={form.adminPassword || ''}
+                placeholder="Nhập mật khẩu mới (tối thiểu 6 ký tự)"
+                onChange={(e) => setForm({ ...form, adminPassword: e.target.value })}
+                autoComplete="new-password"
+              />
+              <button
+                type="button"
+                onClick={() => setShowAdminPassword(!showAdminPassword)}
+                className="absolute right-3 text-slate-400 hover:text-slate-600 cursor-pointer"
+                title={showAdminPassword ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'}
+              >
+                {showAdminPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
+            </div>
+            <span className="text-xs font-semibold text-slate-400">
+              Để trống nếu muốn giữ nguyên mật khẩu hiện tại. Bấm "Lưu toàn bộ cấu hình" bên dưới để áp dụng.
+            </span>
+          </label>
+        </div>
+
+        {/* Sub-card: Google Authenticator (2FA) */}
+        <div className="mt-6 pt-5 border-t border-dew-100">
+          <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
+            <div className="flex items-center gap-2">
+              <ShieldCheck className={form.adminTotpEnabled ? "text-emerald-600" : "text-slate-400"} size={18} />
+              <span className="text-sm font-extrabold text-slate-800">
+                Xác thực 2 bước Google Authenticator (TOTP)
+              </span>
+            </div>
+            {form.adminTotpEnabled ? (
+              <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-bold text-emerald-700 border border-emerald-200">
+                <Check size={12} className="text-emerald-600" />
+                Đang bật 2FA (Yêu cầu mã mỗi lần đăng nhập)
+              </span>
+            ) : (
+              <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-bold text-slate-600 border border-slate-200">
+                Chưa bật 2FA
+              </span>
+            )}
+          </div>
+
+          <p className="text-xs text-slate-600 leading-relaxed mb-4">
+            Bảo vệ tài khoản quản trị tối đa: Mỗi lần đăng nhập, ngoài mật khẩu bạn cần nhập thêm mã 6 chữ số thay đổi mỗi 30 giây từ ứng dụng <strong>Google Authenticator</strong> trên điện thoại.
+          </p>
+
+          {!form.adminTotpEnabled && !totpSetup ? (
+            <button
+              type="button"
+              onClick={startTotpSetup}
+              disabled={totpLoading}
+              className="inline-flex items-center gap-2 rounded-xl bg-dew-600 px-4 py-2.5 text-xs font-bold text-white shadow-sm hover:bg-dew-700 transition cursor-pointer"
+            >
+              <Key size={14} />
+              <span>{totpLoading ? 'Đang tạo mã QR...' : 'Kích hoạt Google Authenticator ngay'}</span>
+            </button>
+          ) : null}
+
+          {/* Setup Panel */}
+          {totpSetup ? (
+            <div className="rounded-2xl border border-dew-200 bg-dew-50/60 p-4 sm:p-5 mt-3 max-w-lg">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-xs font-black uppercase text-dew-900 tracking-wider">
+                  Quét mã QR vào Google Authenticator
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setTotpSetup(null)}
+                  className="text-xs font-bold text-slate-400 hover:text-slate-600 cursor-pointer"
+                >
+                  Đóng
+                </button>
+              </div>
+
+              <div className="flex flex-col sm:flex-row items-center gap-4 mb-4">
+                <div className="rounded-xl bg-white p-2.5 shadow-sm border border-dew-200 shrink-0">
+                  <img
+                    src={totpSetup.qrCodeUrl}
+                    alt="Google Authenticator QR Code"
+                    className="w-36 h-36 object-contain"
+                  />
+                </div>
+                <div className="flex-1 text-xs text-slate-600 space-y-2">
+                  <p><strong>Bước 1:</strong> Mở app <strong>Google Authenticator</strong> trên điện thoại.</p>
+                  <p><strong>Bước 2:</strong> Bấm biểu tượng <strong>+</strong> rồi chọn <strong>Quét mã QR</strong>.</p>
+                  <p><strong>Bước 3:</strong> Hoặc nhập khóa bí mật thủ công:</p>
+                  <div className="flex items-center gap-1.5 bg-white p-1.5 rounded-lg border border-slate-200">
+                    <code className="font-mono font-bold text-dew-800 text-[11px] select-all flex-1 truncate">
+                      {totpSetup.secret}
+                    </code>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        navigator.clipboard.writeText(totpSetup.secret);
+                        setCopiedSecret(true);
+                        setTimeout(() => setCopiedSecret(false), 2000);
+                      }}
+                      className="px-2 py-0.5 rounded bg-slate-100 text-[10px] font-bold text-slate-700 hover:bg-slate-200 cursor-pointer"
+                    >
+                      {copiedSecret ? 'Đã chép' : 'Chép'}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-3 border-t border-dew-200/70">
+                <label className="block text-xs font-extrabold text-slate-700 mb-1.5">
+                  Nhập mã 6 chữ số đang hiển thị trên app để xác thực:
+                </label>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    inputMode="numeric"
+                    maxLength={6}
+                    value={totpCodeInput}
+                    onChange={(e) => setTotpCodeInput(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                    placeholder="123456"
+                    className="field !w-36 text-center font-mono font-black text-lg tracking-widest"
+                  />
+                  <button
+                    type="button"
+                    onClick={confirmTotpActivation}
+                    disabled={totpLoading || totpCodeInput.length !== 6}
+                    className="btn-primary !py-2 !px-4 text-xs"
+                  >
+                    {totpLoading ? 'Đang kích hoạt...' : 'Xác thực & Kích hoạt'}
+                  </button>
+                </div>
+                {totpError ? <p className="mt-2 text-xs font-bold text-red-600">{totpError}</p> : null}
+              </div>
+            </div>
+          ) : null}
+
+          {/* Disable Panel if currently enabled */}
+          {form.adminTotpEnabled && !totpSetup ? (
+            <div className="mt-2">
+              {showDisableTotp ? (
+                <div className="flex items-center gap-2 flex-wrap bg-red-50/70 p-3 rounded-xl border border-red-200 max-w-md">
+                  <span className="text-xs font-bold text-red-800 w-full mb-1">
+                    Nhập mã 6 số từ Google Authenticator để xác nhận tắt 2FA:
+                  </span>
+                  <input
+                    type="text"
+                    inputMode="numeric"
+                    maxLength={6}
+                    value={disableCodeInput}
+                    onChange={(e) => setDisableCodeInput(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                    placeholder="123456"
+                    className="field !w-28 text-center font-mono font-bold text-xs"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleDisableTotp}
+                    disabled={totpLoading || disableCodeInput.length !== 6}
+                    className="rounded-xl bg-red-600 px-3 py-2 text-xs font-bold text-white hover:bg-red-700 transition cursor-pointer"
+                  >
+                    Xác nhận tắt 2FA
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => { setShowDisableTotp(false); setDisableCodeInput(''); setTotpError(''); }}
+                    className="text-xs font-semibold text-slate-500 hover:underline cursor-pointer"
+                  >
+                    Hủy
+                  </button>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => setShowDisableTotp(true)}
+                  className="text-xs font-bold text-red-600 hover:text-red-700 hover:underline cursor-pointer"
+                >
+                  Tắt bảo mật 2FA (Không khuyến nghị)
+                </button>
+              )}
+            </div>
+          ) : null}
+          {totpError && !totpSetup ? <p className="mt-2 text-xs font-bold text-red-600">{totpError}</p> : null}
+        </div>
+      </div>
+
+      {/* KHỐI 7: CẤU HÌNH ĐĂNG NHẬP GOOGLE (GOOGLE AUTHENTICATION) */}
+      <div className="glass rounded-drop p-6">
+        <div className="mb-4 flex items-center justify-between border-b border-dew-100 pb-3 flex-wrap gap-2">
+          <div className="flex items-center gap-2">
+            <Globe className="text-dew-700" size={20} />
+            <h3 className="text-base font-black text-dew-900">
+              7. Cấu hình Đăng nhập Google (Google Authentication)
+            </h3>
+          </div>
+          {form.googleClientId && form.googleClientSecret ? (
+            <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-bold text-emerald-700 border border-emerald-200">
+              <ShieldCheck size={13} className="text-emerald-600" />
+              Google OAuth sẵn sàng hoạt động
+            </span>
+          ) : (
+            <span className="inline-flex items-center gap-1 rounded-full bg-rose-50 px-2.5 py-1 text-xs font-bold text-rose-700 border border-rose-200">
+              Chưa cấu hình Google OAuth
+            </span>
+          )}
+        </div>
+
+        <p className="mb-4 text-xs font-medium text-slate-600 leading-relaxed">
+          Cho phép học viên đăng nhập nhanh bằng tài khoản Google tại trang luyện tập miễn phí. 
+          Lấy Client ID và Client Secret từ <a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener noreferrer" className="font-bold text-dew-700 underline">Google Cloud Console</a>.
+        </p>
+
+        {/* Authorized Redirect URI */}
+        <div className="mb-4 rounded-xl border border-sky-200 bg-sky-50/70 p-3.5">
+          <div className="flex items-center justify-between gap-2 mb-1.5">
+            <span className="text-xs font-extrabold text-sky-900">
+              Authorized Redirect URI (URI chuyển hướng hợp lệ dán vào Google Cloud):
+            </span>
+            <button
+              type="button"
+              onClick={() => {
+                const origin = typeof window !== 'undefined' ? window.location.origin.replace(':3100', ':5000') : 'http://localhost:5000';
+                const uri = `${origin}/api/auth/free-portal/google/callback`;
+                navigator.clipboard.writeText(uri);
+                setCopiedUri(true);
+                setTimeout(() => setCopiedUri(false), 2000);
+              }}
+              className="inline-flex items-center gap-1 rounded-lg bg-sky-100 px-2 py-1 text-[11px] font-bold text-sky-800 hover:bg-sky-200 transition cursor-pointer"
+            >
+              {copiedUri ? <Check size={12} className="text-emerald-600" /> : <Copy size={12} />}
+              <span>{copiedUri ? 'Đã sao chép!' : 'Sao chép URI'}</span>
+            </button>
+          </div>
+          <code className="block rounded-lg bg-white px-2.5 py-1.5 text-xs font-mono font-bold text-slate-800 border border-sky-200 select-all">
+            {typeof window !== 'undefined'
+              ? `${window.location.origin.replace(':3100', ':5000')}/api/auth/free-portal/google/callback`
+              : 'http://localhost:5000/api/auth/free-portal/google/callback'}
+          </code>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-2">
+          <label className="grid gap-1.5 text-sm font-extrabold text-slate-700">
+            <span>Google Client ID</span>
+            <input
+              className="field font-mono text-xs"
+              value={form.googleClientId || ''}
+              placeholder="VD: 123456789-xxx.apps.googleusercontent.com"
+              onChange={(e) => setForm({ ...form, googleClientId: e.target.value })}
+            />
+          </label>
+
+          <label className="grid gap-1.5 text-sm font-extrabold text-slate-700">
+            <span>Google Client Secret</span>
+            <div className="relative flex items-center">
+              <input
+                type={showGoogleSecret ? 'text' : 'password'}
+                className="field font-mono text-xs pr-10"
+                value={form.googleClientSecret || ''}
+                placeholder="VD: GOCSPX-xxxxxxxxxxxxxxxxxxxx"
+                onChange={(e) => setForm({ ...form, googleClientSecret: e.target.value })}
+              />
+              <button
+                type="button"
+                onClick={() => setShowGoogleSecret(!showGoogleSecret)}
+                className="absolute right-3 text-slate-400 hover:text-slate-600 cursor-pointer"
+                title={showGoogleSecret ? 'Ẩn' : 'Hiện'}
+              >
+                {showGoogleSecret ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
+            </div>
           </label>
         </div>
       </div>

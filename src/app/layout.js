@@ -12,6 +12,8 @@ const font = Be_Vietnam_Pro({
 export async function generateMetadata() {
   const site = await getSite();
   const favicon = site.faviconUrl || '/brand/favicon.png';
+  const v = site.updatedAt || '1';
+  const faviconWithVersion = `${favicon}?v=${v}`;
   return {
     title: `${site.brandName || 'DewSkill'} | Tự học tin học như chơi game`,
     description:
@@ -19,12 +21,12 @@ export async function generateMetadata() {
       'Tự học tin học với lộ trình từng chặng, luyện tập hằng ngày tích XP, video ngắn có câu hỏi ngay trong bài và chấm điểm tức thì.',
     icons: {
       icon: [
-        { url: favicon },
-        { url: '/favicon.png', type: 'image/png' },
-        { url: '/favicon.ico' },
+        { url: faviconWithVersion },
+        { url: `/favicon.png?v=${v}` },
+        { url: `/favicon.ico?v=${v}` },
       ],
-      shortcut: favicon,
-      apple: favicon,
+      shortcut: faviconWithVersion,
+      apple: faviconWithVersion,
     },
   };
 }
@@ -32,13 +34,15 @@ export async function generateMetadata() {
 export default async function RootLayout({ children }) {
   const site = await getSite();
   const favicon = site.faviconUrl || '/brand/favicon.png';
+  const v = site.updatedAt || '1';
+  const faviconWithVersion = `${favicon}?v=${v}`;
 
   return (
     <html lang="vi" className={font.variable}>
       <head>
-        <link rel="icon" type="image/png" href={favicon} />
-        <link rel="shortcut icon" href={favicon} />
-        <link rel="apple-touch-icon" href={favicon} />
+        <link rel="icon" href={faviconWithVersion} />
+        <link rel="shortcut icon" href={faviconWithVersion} />
+        <link rel="apple-touch-icon" href={faviconWithVersion} />
       </head>
       <body className="font-sans antialiased">{children}</body>
     </html>

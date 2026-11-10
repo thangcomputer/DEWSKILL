@@ -42,23 +42,123 @@ const SITE_DEFAULTS = {
   heroTitle: 'Học tin học như chơi game cùng DewSkill',
   heroSubtitle: '',
   footerNote: '',
+  adminPassword: '',
+  googleClientId: '',
+  googleClientSecret: '',
+  facebookAppId: '',
+  facebookAppSecret: '',
+  adminTotpSecret: '',
+  adminTotpEnabled: false,
+  updatedAt: 0,
 };
 
+async function syncFaviconFiles(faviconUrl) {
+  if (!faviconUrl) return;
+  try {
+    let sourcePath = null;
+    if (faviconUrl.startsWith('/api/uploads/')) {
+      const filename = path.basename(faviconUrl.split('?')[0]);
+      sourcePath = path.join(UPLOAD_DIR, filename);
+    } else if (faviconUrl.startsWith('/')) {
+      sourcePath = path.join(process.cwd(), 'public', faviconUrl.slice(1).split('?')[0]);
+    }
+
+    if (sourcePath) {
+      const data = await fs.readFile(sourcePath);
+      const targets = [
+        path.join(process.cwd(), 'public', 'favicon.ico'),
+        path.join(process.cwd(), 'public', 'favicon.png'),
+        path.join(process.cwd(), 'public', 'favicon.webp'),
+        path.join(process.cwd(), 'public', 'brand', 'favicon.png'),
+        path.join(process.cwd(), 'public', 'brand', 'favicon.webp'),
+        path.join(process.cwd(), '..', 'client', 'public', 'favicon.ico'),
+        path.join(process.cwd(), '..', 'client', 'public', 'favicon.png'),
+        path.join(process.cwd(), '..', 'client', 'public', 'favicon.webp'),
+        path.join(process.cwd(), '..', 'client', 'public', 'brand', 'favicon.png'),
+        path.join(process.cwd(), '..', 'client', 'public', 'brand', 'favicon.webp'),
+      ];
+      for (const target of targets) {
+        try {
+          await fs.mkdir(path.dirname(target), { recursive: true });
+          await fs.writeFile(target, data);
+        } catch {
+          // ignore individual target errors
+        }
+      }
+    }
+  } catch {
+    // ignore
+  }
+}
+
+const SECURITY_KEYS = [
+  'adminPassword',
+  'googleClientId',
+  'googleClientSecret',
+  'facebookAppId',
+  'facebookAppSecret',
+  'adminTotpSecret',
+  'adminTotpEnabled',
+];
+
 export async function getSite() {
-  return { ...SITE_DEFAULTS, ...(await readJson('site.json', {})) };
+  const siteData = await readJson('site.json', {});
+  const securityData = await readJson('admin-security.json', {});
+  return { ...SITE_DEFAULTS, ...siteData, ...securityData };
 }
 
 export async function saveSite(patch) {
   const current = await getSite();
   const next = { ...current };
+  const nextSecurity = await readJson('admin-security.json', {});
+
   for (const key of Object.keys(SITE_DEFAULTS)) {
-    if (typeof patch[key] === 'string') next[key] = patch[key].trim();
+    if (typeof patch[key] === 'string') {
+      const val = patch[key].trim();
+      next[key] = val;
+      if (SECURITY_KEYS.includes(key)) {
+        nextSecurity[key] = val;
+      }
+    } else if (typeof patch[key] === 'boolean' && SECURITY_KEYS.includes(key)) {
+      next[key] = patch[key];
+      nextSecurity[key] = patch[key];
+    }
   }
-  await writeJson('site.json', next);
+
+  next.updatedAt = Date.now();
+
+  // Lưu file admin-security.json (được .gitignore bảo vệ, không bao giờ bị push lên git)
+  await writeJson('admin-security.json', nextSecurity);
+
+  // Tạo bản sao public cho site.json (xóa các thông tin bí mật để GitHub Push không bao giờ bị chặn)
+  const cleanSite = { ...next };
+  for (const sKey of SECURITY_KEYS) {
+    if (typeof cleanSite[sKey] === 'boolean') {
+      cleanSite[sKey] = false;
+    } else {
+      cleanSite[sKey] = '';
+    }
+  }
+
+  await writeJson('site.json', cleanSite);
+  if (next.faviconUrl) {
+    await syncFaviconFiles(next.faviconUrl);
+  }
   return next;
 }
 
 /* ---------- Poster / bài viết ---------- */
+function slugify(text) {
+  return String(text || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[đĐ]/g, 'd')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 120);
+}
+
 export async function listPosters({ onlyPublished = false } = {}) {
   const all = await readJson('posters.json', []);
   const rows = onlyPublished ? all.filter((p) => p.published) : all;
@@ -67,21 +167,37 @@ export async function listPosters({ onlyPublished = false } = {}) {
   );
 }
 
+export async function getPoster(idOrSlug) {
+  const all = await readJson('posters.json', []);
+  return all.find((p) => p.id === idOrSlug || (p.slug && p.slug === idOrSlug)) || null;
+}
+
 export async function savePoster(input) {
   const all = await readJson('posters.json', []);
+  const targetSlug = slugify(input.slug || input.title || 'bai-viet');
   const clean = {
-    title: String(input.title || '').trim().slice(0, 140),
-    summary: String(input.summary || '').trim().slice(0, 400),
-    category: String(input.category || 'Thông báo').trim().slice(0, 40),
+    title: String(input.title || '').trim().slice(0, 200),
+    summary: String(input.summary || '').trim().slice(0, 500),
+    category: String(input.category || 'Thông báo').trim().slice(0, 50),
     image: String(input.image || '').trim(),
     link: String(input.link || '').trim(),
+    slug: targetSlug,
+    content: String(input.content || '').trim(),
+    keywords: Array.isArray(input.keywords)
+      ? input.keywords.map((k) => String(k).trim()).filter(Boolean)
+      : String(input.keywords || '')
+          .split(',')
+          .map((k) => k.trim())
+          .filter(Boolean),
+    seoScore: typeof input.seoScore === 'number' ? input.seoScore : (input.seoScore ? parseInt(input.seoScore, 10) : null),
+    seoChecklist: Array.isArray(input.seoChecklist) ? input.seoChecklist : [],
     pinned: Boolean(input.pinned),
     published: input.published !== false,
   };
   if (!clean.title) throw new Error('Cần nhập tiêu đề');
   const index = input.id ? all.findIndex((p) => p.id === input.id) : -1;
   if (index >= 0) {
-    all[index] = { ...all[index], ...clean };
+    all[index] = { ...all[index], ...clean, updatedAt: new Date().toISOString() };
   } else {
     all.push({ id: newId('poster'), createdAt: new Date().toISOString(), ...clean });
   }

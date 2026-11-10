@@ -240,7 +240,7 @@ function getRelevantSuggestions(matchedFaq, allFaqs, history = []) {
 
 /** Gọi Gemini nếu có API Key */
 async function callGemini(apiKey, systemPrompt, knowledgeContext, userMessage, history = []) {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${apiKey}`;
 
   const promptText = `
 ${systemPrompt}

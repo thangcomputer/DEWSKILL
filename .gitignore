@@ -5,4 +5,5 @@ node_modules
 # Dữ liệu phát sinh khi chạy (liên hệ khách, ảnh tải lên) không đưa lên git
 data/leads.json
 data/uploads/
+data/admin-security.json
 
