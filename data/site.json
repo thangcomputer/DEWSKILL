@@ -179,11 +179,11 @@
     "title": "Ưu đãi học thử miễn phí hôm nay!",
     "subtitle": "Đăng ký tài khoản ngay để nhận trọn bộ bài giảng tương tác và luyện tập cùng AI chấm điểm tức thì.",
     "imageUrl": "/api/uploads/1794286314601-3024f6f9.png",
-    "linkUrl": "/#tu-van",
+    "linkUrl": "https://zalo.me/0984623486",
     "buttonEnabled": true,
     "buttonText": "Đăng ký ngay",
-    "buttonLink": "/#tu-van",
-    "openNewTab": false,
+    "buttonLink": "https://zalo.me/0984623486",
+    "openNewTab": true,
     "delaySeconds": 2,
     "autoCloseSeconds": 0,
     "showOncePerSession": true
@@ -195,5 +195,5 @@
   "facebookAppSecret": "",
   "adminTotpSecret": "",
   "adminTotpEnabled": false,
-  "updatedAt": 1794298856028
+  "updatedAt": 1794299278513
 }
