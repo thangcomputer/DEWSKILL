@@ -1096,6 +1096,7 @@ export default function SiteTab() {
                             value={step.mascot || 'cam-xuc-hoc-bai'}
                             onChange={(e) => updateJourneyStep(activeJourneyTab, 'mascot', e.target.value)}
                           >
+                            <option value="con-tro">Con trỏ chuột cử nhân (Linh vật con trỏ mới)</option>
                             <option value="cam-xuc-hoc-bai">Cảm xúc học bài (Đội mũ cử nhân + laptop)</option>
                             <option value="doc-sach">Đọc sách (Đội mũ cử nhân + ôm sách)</option>
                             <option value="nang-dong">Năng động (Đội mũ cử nhân + laptop bánh răng)</option>

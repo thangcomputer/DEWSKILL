@@ -10,13 +10,22 @@ const LABELS = {
   'quyet-tam': 'Giọt nước quyết tâm',
   'nang-dong': 'Giọt nước năng động',
   'cam-xuc-suy-nghi': 'Giọt nước đang suy nghĩ',
+  'con-tro': 'Con trỏ chuột cử nhân',
+  'con-tro-tot-nghiep': 'Con trỏ chuột tốt nghiệp cử nhân',
 };
 
 export default function Mascot({ name = 'cam-xuc-hoc-bai', size = 160, className = '' }) {
+  let src = `/mascot/${name}.gif`;
+  if (name === 'con-tro' || name === 'con-tro-tot-nghiep') {
+    src = '/mascot/con-tro.webp';
+  } else if (name.includes('.')) {
+    src = name.startsWith('/') ? name : `/mascot/${name}`;
+  }
+
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src={`/mascot/${name}.gif`}
+      src={src}
       alt={LABELS[name] || 'Linh vật giọt nước DewSkill'}
       width={size}
       height={size}
