@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import {
   Bot,
   BrainCircuit,
@@ -14,6 +15,7 @@ import {
 
 const FEATURES = [
   {
+    slug: 'lo-trinh-hoc-tin-hoc-theo-tung-chang',
     icon: Milestone,
     category: 'Lộ trình bài bản',
     categoryIcon: Compass,
@@ -37,6 +39,7 @@ const FEATURES = [
     meta: 'Chuẩn sư phạm thực chiến',
   },
   {
+    slug: 'tich-luy-xp-cap-do-va-chuoi-ngay-hoc-tap',
     icon: Zap,
     category: 'Gamification & Động lực',
     categoryIcon: Trophy,
@@ -60,6 +63,7 @@ const FEATURES = [
     meta: 'Học hào hứng như chơi game',
   },
   {
+    slug: 'video-ngan-co-cau-hoi-trong-bai-giang',
     icon: PlayCircle,
     category: 'Tương tác Micro-Learning',
     categoryIcon: GraduationCap,
@@ -83,6 +87,7 @@ const FEATURES = [
     meta: 'Tập trung cao độ, tiếp thu tức thì',
   },
   {
+    slug: 'cham-diem-va-goi-y-tuc-thi-cong-nghe-ai',
     icon: Bot,
     category: 'AI Trợ giảng 24/7',
     categoryIcon: Sparkles,
@@ -126,10 +131,11 @@ export default function Features() {
 
       {/* Grid 4 Cards phong cách EdTech chuyên nghiệp */}
       <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:gap-8">
-        {FEATURES.map((item, idx) => {
+        {FEATURES.map((item) => {
           const Icon = item.icon;
           const CategoryIcon = item.categoryIcon;
           const { accent } = item;
+          const articleUrl = `/bai-viet/${item.slug}`;
 
           return (
             <article
@@ -152,24 +158,29 @@ export default function Features() {
               <div>
                 <div className="flex items-center justify-between gap-4">
                   {/* Icon nổi khối 3D gradient cao cấp */}
-                  <div
+                  <Link
+                    href={articleUrl}
                     className={`flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl bg-gradient-to-br ${accent.gradient} text-white shadow-lg ${accent.shadow} ring-4 ${accent.ring} transition-transform duration-300 group-hover:scale-105 group-hover:rotate-1`}
+                    title={`Đọc bài viết: ${item.title}`}
                   >
                     <Icon className="h-7 w-7 sm:h-8 sm:w-8" strokeWidth={2.2} />
-                  </div>
+                  </Link>
 
                   {/* Badge danh mục sư phạm */}
-                  <div
-                    className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-bold shadow-xs ${accent.badge}`}
+                  <Link
+                    href={articleUrl}
+                    className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-bold shadow-xs transition-opacity hover:opacity-80 ${accent.badge}`}
                   >
                     <CategoryIcon className="h-3.5 w-3.5" />
                     <span>{item.category}</span>
-                  </div>
+                  </Link>
                 </div>
 
                 {/* Tiêu đề & Mô tả bài giảng */}
                 <h3 className="mt-5 text-xl sm:text-2xl font-black tracking-tight text-slate-900 transition-colors group-hover:text-dew-700">
-                  {item.title}
+                  <Link href={articleUrl} className="hover:underline">
+                    {item.title}
+                  </Link>
                 </h3>
                 <p className="mt-2.5 text-sm sm:text-[15px] font-normal leading-relaxed text-slate-600">
                   {item.text}
@@ -194,15 +205,20 @@ export default function Features() {
                 </ul>
               </div>
 
-              {/* Footer card: Huy hiệu đảm bảo chất lượng sư phạm */}
+              {/* Footer card: Huy hiệu đảm bảo chất lượng sư phạm & Link tìm hiểu thêm */}
               <div className="mt-6 flex items-center justify-between border-t border-slate-100/90 pt-3.5 text-xs font-semibold text-slate-400">
                 <span className="flex items-center gap-1.5 text-slate-500">
                   <span className={`h-1.5 w-1.5 rounded-full ${accent.checkBg}`} />
                   {item.meta}
                 </span>
-                <span className={`font-bold transition-transform duration-300 group-hover:translate-x-1 ${accent.tagText}`}>
-                  Tìm hiểu thêm →
-                </span>
+                <Link
+                  href={articleUrl}
+                  className={`inline-flex items-center gap-1 font-bold transition-all duration-300 group-hover:translate-x-1 hover:underline ${accent.tagText}`}
+                  title={`Đọc bài viết chi tiết về ${item.title}`}
+                >
+                  <span>Tìm hiểu thêm</span>
+                  <span aria-hidden="true">→</span>
+                </Link>
               </div>
             </article>
           );

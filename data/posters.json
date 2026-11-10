@@ -1,5 +1,93 @@
 [
   {
+    "id": "poster-cham-diem-goi-y-ai",
+    "slug": "cham-diem-va-goi-y-tuc-thi-cong-nghe-ai",
+    "title": "Hệ Thống Chấm Điểm Và Gợi Ý Tức Thì: Phản Hồi Sau 1 Giây Không Lộ Đáp Án",
+    "category": "Thông báo",
+    "summary": "Khám phá công nghệ chấm điểm tự động và AI trợ giảng 24/7 tại DewSkill. Trả kết quả sau 1 giây cho mọi dạng bài trắc nghiệm, điền khuyết, ghép nối kèm gợi ý tư duy logic.",
+    "image": "",
+    "link": "",
+    "published": true,
+    "pinned": true,
+    "order": 4,
+    "seoScore": 100,
+    "keywords": [
+      "ai chấm điểm",
+      "gợi ý bài tập tức thì",
+      "trợ giảng ai 24/7",
+      "bài tập excel word",
+      "dewskill"
+    ],
+    "createdAt": "2026-11-10T05:38:33.302Z",
+    "content": "Nỗi ức chế lớn nhất khi tự học tin học là: **Làm xong bài tập nhưng không biết mình làm đúng hay sai, hoặc sai ở đâu để sửa**. Chờ giáo viên chấm bài thì mất vài ngày, đến lúc nhận kết quả thì bạn đã quên mất tư duy lúc làm bài.\n\nHệ thống **Chấm điểm tự động và AI Trợ giảng tức thì** của DewSkill ra đời để giải quyết triệt để bài toán này.\n\n---\n\n## 1. Sức Mạnh Của Phản Hồi Tức Thì (Instant Feedback Loop)\n\nTrong khoa học giáo dục, khoảng cách thời gian giữa lúc làm bài và lúc nhận phản hồi càng ngắn thì hiệu quả ghi nhớ càng cao:\n\n* Tại DewSkill, ngay khi bạn nhấn nút **Nộp bài**, hệ thống sẽ xử lý và trả kết quả chi tiết trong vòng **chưa đầy 1 giây**.\n* Bạn nhìn thấy ngay số điểm, số câu đúng/sai, thời gian hoàn thành và số điểm XP nhận được.\n* Cảm giác hồi hộp, nhận phản hồi ngay lập tức giúp não bộ sửa chữa sai sót tức thì trước khi lỗi sai trở thành thói quen cố hữu.\n\n---\n\n## 2. Hỗ Trợ Đầy Đủ 5+ Dạng Bài Tập Thực Chiến\n\nDewSkill không chỉ có trắc nghiệm A-B-C-D đơn điệu. Hệ thống được xây dựng mô phỏng 100% các kỳ thi chứng chỉ tin học quốc tế (MOS, IC3, Chuẩn CNTT Cơ Bản):\n\n1. **Trắc nghiệm tình huống**: Xử lý các ca va chạm thực tế trong văn phòng.\n2. **Điền khuyết công thức**: Nhập cú pháp hàm, đối số, phím tắt.\n3. **Sắp xếp thứ tự thao tác**: Kéo thả các bước làm theo trình tự chuẩn kỹ thuật.\n4. **Nối cột khái niệm**: Ghép nối tính năng với biểu tượng hoặc phím tắt tương ứng.\n5. **Chọn Đúng/Sai phản biện**: Phân biệt các thói quen sai lầm phổ biến khi dùng Word và Excel.\n\n---\n\n## 3. Cơ Chế Gợi Ý Thông Minh: \"Chỉ Đường Chứ Không Lộ Đáp Án\"\n\nMột trợ giảng giỏi là người giúp học viên tự tìm ra đáp án, chứ không phải làm bài hộ học viên:\n\n* Khi bạn gặp một câu hỏi khó hoặc làm sai lần đầu, nút **Gợi ý thông minh (Hint)** sẽ sáng lên.\n* Bấm vào gợi ý, AI Trợ giảng sẽ đưa ra các câu hỏi gợi mở, nhắc lại quy tắc cú pháp hoặc ví dụ tương tự.\n* Bạn tự suy nghĩ và sửa lại đáp án thành công. Khi tự tay giải quyết được bài toán khó, niềm vui và sự tự tin tăng lên gấp bội!\n\n---\n\n## 4. Luôn Có Người Bạn Đồng Hành 24/7\n\nDù bạn học lúc 6 giờ sáng hay 12 giờ đêm, hệ thống chấm điểm và trợ giảng thông minh của DewSkill luôn túc trực để hỗ trợ bạn tiến bộ từng phút. Đăng ký tài khoản miễn phí và thử làm bài tập đầu tiên ngay hôm nay!"
+  },
+  {
+    "id": "poster-video-ngan-tuong-tac",
+    "slug": "video-ngan-co-cau-hoi-trong-bai-giang",
+    "title": "Đột Phá Với Video Ngắn Có Câu Hỏi Tương Tác: Học 5 Phút, Nhớ Ngay Tại Chỗ",
+    "category": "Mẹo học",
+    "summary": "Nói không với các bài giảng dài dòng gây buồn ngủ. Tìm hiểu mô hình Micro-Learning với video ngắn 3 - 5 phút tự động dừng hỏi đáp tương tác trực tiếp.",
+    "image": "",
+    "link": "",
+    "published": true,
+    "pinned": true,
+    "order": 3,
+    "seoScore": 100,
+    "keywords": [
+      "video ngắn tin học",
+      "micro-learning",
+      "học tin học không buồn ngủ",
+      "video tương tác",
+      "dewskill"
+    ],
+    "createdAt": "2026-11-10T05:38:33.302Z",
+    "content": "Hầu hết các khóa học online truyền thống hiện nay đều mắc chung một sai lầm: **Video quá dài (từ 30 phút đến 1 tiếng)**. Người học ngồi thụ động nhìn màn hình, sau 10 phút mắt bắt đầu lơ đễnh, tay cầm điện thoại lướt mạng xã hội và hoàn toàn không thực hành được gì.\n\nDewSkill thay đổi hoàn toàn cuộc chơi với mô hình **Video ngắn tương tác dừng bài (Interactive Micro-Learning)**.\n\n---\n\n## 1. Phương Pháp Micro-Learning Là Gì?\n\nMicro-learning là phương pháp phân đoạn bài học thành các đơn vị kiến thức cực nhỏ:\n\n* Mỗi video chỉ kéo dài từ **3 đến 5 phút**.\n* Chỉ tập trung xử lý **1 tình huống thực tế duy nhất**: Ví dụ: Cách khóa vùng tham chiếu bằng phím F4 trong Excel, hoặc cách sửa lỗi nhảy trang trong Word.\n* Bỏ qua mọi màn dạo đầu lan man, đi thẳng 100% vào thao tác phím và mẹo xử lý nhanh.\n\n---\n\n## 2. Tính Năng \"Dừng Video Hỏi Đáp Tương Tác\" Hoạt Động Ra Sao?\n\nĐiểm đặc biệt nhất tại DewSkill là bạn **không thể ngồi thụ động**:\n\n1. Khi video giảng đến thao tác then chốt (ví dụ: công thức điều kiện hàm IF), video sẽ **tự động dừng lại**.\n2. Một bảng tương tác xuất hiện ngay trên màn hình yêu cầu bạn chọn đáp án đúng hoặc gõ công thức tiếp theo.\n3. Nếu bạn trả lời đúng: Video sẽ tự động phát tiếp phần mở rộng kèm lời khen ngợi từ linh vật DewSkill.\n4. Nếu bạn trả lời sai: Hệ thống sẽ đánh dấu vị trí sai, đưa ra gợi ý tư duy ngắn để bạn hiểu bản chất mà không phải tua lại từ đầu video.\n\n---\n\n## 3. Lợi Ích Vượt Trội Cho Người Đi Làm Bận Rộn\n\n* **Tiết kiệm 70% thời gian**: Bạn không cần dành nửa ngày để xem bài giảng. Bất cứ khi nào rảnh 5 phút, bạn đều có thể mở điện thoại hoặc máy tính lên để hoàn thành 1 bài học trọn vẹn.\n* **Tỷ lệ ghi nhớ đạt 80%**: Khoa học chứng minh: vừa xem vừa thực hành thao tác tương tác giúp não bộ ghi nhớ sâu gấp 4 lần so với chỉ xem thụ động.\n* **Tự tin áp dụng ngay vào công việc**: Học xong 1 video là có thể áp dụng ngay vào bảng tính Excel hay tài liệu Word đang làm việc tại cơ quan.\n\n---\n\n## 4. Hãy Trải Nghiệm Cách Học Tin Học Kiểu Mới\n\nBạn không còn phải chịu đựng những bài giảng buồn ngủ nữa. Hãy truy cập phần Thực Hành tại DewSkill để trải nghiệm ngay các video ngắn tương tác chất lượng cao!"
+  },
+  {
+    "id": "poster-tich-luy-xp-chuoi-ngay",
+    "slug": "tich-luy-xp-cap-do-va-chuoi-ngay-hoc-tap",
+    "title": "Bí Quyết Giữ Lửa Tự Học: Tích Lũy XP, Cấp Độ Và Chuỗi Ngày Streak",
+    "category": "Ưu đãi",
+    "summary": "Học tin học như chơi game với cơ chế Gamification: Tích lũy điểm XP sau mỗi câu đúng, duy trì ngọn lửa chuỗi ngày học đều đặn và vinh danh trên bảng vàng thành tích.",
+    "image": "",
+    "link": "",
+    "published": true,
+    "pinned": true,
+    "order": 2,
+    "seoScore": 100,
+    "keywords": [
+      "gamification trong giáo dục",
+      "tích lũy xp",
+      "chuỗi ngày streak",
+      "tự học có kỷ luật",
+      "dewskill"
+    ],
+    "createdAt": "2026-11-10T05:38:33.302Z",
+    "content": "Kẻ thù lớn nhất của việc tự học không phải là bài tập khó, mà là sự **mất động lực và trì hoãn**. Bạn bắt đầu với 200% nhiệt huyết, nhưng chỉ sau một tuần, sự bận rộn và chán nản kéo bạn rời xa bàn học.\n\nTại **DewSkill**, chúng tôi áp dụng triệt để mô hình **Gamification (Trò chơi hóa giáo dục)** để biến mỗi phút học tin học thành một trải nghiệm kích thích, hào hứng và đầy tự hào.\n\n---\n\n## 1. Gamification Trong Học Tập Là Gì?\n\nGamification là việc đưa các yếu tố hấp dẫn của trò chơi điện tử vào quá trình tiếp thu kiến thức:\n\n* **Mục tiêu rõ ràng**: Bạn luôn biết bài tiếp theo mang lại điều gì.\n* **Phần thưởng tức thì**: Não bộ được kích thích sản sinh dopamine khi nhận điểm số ngay sau mỗi hành động đúng.\n* **Thấy được sự tiến bộ**: Cấp độ (Level) và thanh tiến trình thể hiện rõ bạn đang phát triển từng ngày.\n\n---\n\n## 2. Cơ Chế Tích Lũy Điểm Kinh Nghiệm (XP) Tại DewSkill\n\nMọi nỗ lực học tập của bạn đều được ghi nhận bằng điểm kinh nghiệm (Experience Points - XP):\n\n* **+10 XP** khi xem xong một video bài giảng tương tác.\n* **+15 XP** cho mỗi bài tập thực hành hoàn thành chính xác ngay lần đầu.\n* **+50 XP** thưởng lớn khi chinh phục thành công bài thi vượt chặng.\n\nXP tích lũy giúp tài khoản của bạn thăng cấp từ **Tân Binh Học Việc** ➔ **Tập Sự Tin Học** ➔ **Chiến Binh Văn Phòng** ➔ **Bậc Thầy Công Nghệ**.\n\n---\n\n## 3. Sức Mạnh Của Chuỗi Ngày Học Liên Tục (Streak)\n\nBiểu tượng ngọn lửa 🔥 kèm số ngày học liên tục chính là vũ khí mạnh nhất giúp bạn chiến thắng sự lười biếng:\n\n* **Chỉ 10-15 phút mỗi ngày**: Thay vì học 5 tiếng dồn dập vào Chủ Nhật rồi quên sạch vào thứ Hai, việc giữ chuỗi ngày học mỗi ngày giúp kiến thức thẩm thấu tự nhiên vào phản xạ cơ bắp.\n* **Tâm lý bảo vệ chuỗi**: Khi bạn đã đạt chuỗi 7 ngày, 14 ngày hay 30 ngày liên tục, bạn sẽ không nỡ để ngọn lửa bị dập tắt chỉ vì một phút lười biếng.\n* **Bảng vinh danh tuần và tháng**: Học viên có chuỗi học tập chăm chỉ nhất sẽ được hiển thị trang trọng trên Bảng Xếp Hạng toàn quốc, tạo động lực cạnh tranh lành mạnh và đầy tự hào.\n\n---\n\n## 4. Lời Khuyên Giữ Chuỗi Từ Thầy Thắng\n\nHãy đặt ra một khung giờ cố định trong ngày (ví dụ: 12h15 sau bữa trưa hoặc 21h00 trước khi đi ngủ), mở DewSkill lên và hoàn thành ít nhất 1 bài tập. Sau 21 ngày, bạn sẽ ngạc nhiên khi thấy kỹ năng tin học văn phòng của mình bứt phá vượt bậc!"
+  },
+  {
+    "id": "poster-lo-trinh-tung-chang",
+    "slug": "lo-trinh-hoc-tin-hoc-theo-tung-chang",
+    "title": "Lộ Trình Học Tin Học Theo Từng Chặng: Phương Pháp Học Chắc Nhớ Lâu",
+    "category": "Mẹo học",
+    "summary": "Khám phá phương pháp học tin học chia nhỏ theo từng chặng khoa học tại DewSkill. Học đến đâu thực hành thành thạo đến đó, mở khóa bài học tuần tự và tính năng thi vượt chặng thông minh.",
+    "image": "",
+    "link": "",
+    "published": true,
+    "pinned": true,
+    "order": 1,
+    "seoScore": 100,
+    "keywords": [
+      "lộ trình học tin học",
+      "tự học tin học văn phòng",
+      "phương pháp học theo chặng",
+      "học excel word",
+      "dewskill"
+    ],
+    "createdAt": "2026-11-10T05:38:33.302Z",
+    "content": "Bạn đã bao giờ rơi vào cảm giác: mua một khóa học tin học văn phòng dài hàng chục tiếng đồng hồ, nhưng chỉ học được 2 buổi đầu rồi bỏ xó vì quá nhiều kiến thức dồn dập?\n\nĐó không phải là lỗi của bạn. Bộ não con người không được thiết kế để nhồi nhét hàng trăm phím tắt và công thức cùng một lúc. Đó chính là lý do **DewSkill** áp dụng phương pháp **Học theo từng chặng (Milestone-based Learning)** — chuẩn đào tạo sư phạm số hiện đại nhất hiện nay.\n\n---\n\n## 1. Phương Pháp Học Theo Từng Chặng Là Gì?\n\nThay vì đưa cho bạn một giáo trình khổng lồ 500 trang, DewSkill chia toàn bộ kỹ năng Word, Excel, PowerPoint thành **các chặng học nhỏ (Stations & Milestones)**:\n\n* **Mỗi chặng chỉ giải quyết 1 mục tiêu duy nhất**: Ví dụ: Chặng 1 chỉ học về căn lề và định dạng đoạn văn bản; Chặng 2 chỉ học về kẻ bảng và canh lề ô.\n* **Thời lượng vừa vặn**: Mỗi bài học kéo dài từ **5 đến 10 phút**, giúp bạn hoàn toàn làm chủ kiến thức trong giờ nghỉ trưa hoặc buổi tối.\n* **Học chắc từng bước**: Hoàn thành trọn vẹn bài tập thực hành của chặng hiện tại thì chặng tiếp theo mới được mở khóa. Bạn không bao giờ bị \"ngợp\" hay rơi rụng kiến thức căn bản.\n\n---\n\n## 2. Quy Trình 3 Bước Vàng Trong Mỗi Chặng Học\n\nMỗi chặng học tại DewSkill được xây dựng dựa trên chu trình phản xạ có điều kiện:\n\n1. **Bước 1: Tiếp thu tinh gọn (Video 3-5 phút)**  \n   Video đi thẳng vào thao tác chuột và bàn phím, không lý thuyết suông.\n2. **Bước 2: Thực hành tương tác ngay tại chỗ**  \n   Hệ thống yêu cầu bạn thực hiện các thao tác: kéo thả, điền lệnh, sắp xếp bước làm để kiểm tra mức độ hiểu bài.\n3. **Bước 3: Về đích chặng & Nhận thưởng XP**  \n   Vượt qua bài tập tổng kết chặng, bạn nhận ngay điểm XP, mở khóa chặng mới và tích lũy huy hiệu vinh danh.\n\n---\n\n## 3. Tính Năng \"Thi Vượt Chặng\" Dành Cho Người Đã Có Nền Tảng\n\nNếu bạn đã biết cơ bản về Word hoặc Excel và không muốn học lại từ đầu?  \nDewSkill cung cấp tính năng **Thi vượt chặng (Challenge Mode)**:\n\n* Bạn chỉ cần bấm vào trạm thử thách cuối chặng và hoàn thành bài kiểm tra với số điểm trên 80%.\n* Hệ thống sẽ tự động xác nhận bạn đã thành thạo chặng đó và mở khóa ngay các chặng nâng cao tiếp theo.\n* Tiết kiệm tối đa thời gian mà vẫn đảm bảo không bỏ sót bất kỳ lỗ hổng kiến thức nào.\n\n---\n\n## 4. Bắt Đầu Chinh Phục Chặng Đầu Tiên Ngay Hôm Nay\n\nTự học tin học không hề khó nếu bạn có một lộ trình thông minh và người bạn đồng hành kỷ luật. Hãy chọn môn học bạn cần (Excel, Word hoặc PowerPoint), bước vào chặng 1 và tận hưởng cảm giác hoàn thành mục tiêu mỗi ngày cùng DewSkill!"
+  },
+  {
     "id": "poster-sample-1",
     "title": "Bắt đầu tự học tin học miễn phí",
     "summary": "Tạo tài khoản, vào lộ trình chặng đầu tiên và nhận XP ngay hôm nay.",
