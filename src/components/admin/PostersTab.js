@@ -153,9 +153,9 @@ export default function PostersTab() {
         </div>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-3">
+      <div className="grid gap-6 lg:grid-cols-3 w-full min-w-0">
         {/* Form nhập / sửa poster - Cột trái chiếm 2/3 */}
-        <form onSubmit={save} className="glass grid h-fit gap-3 rounded-drop p-6 lg:col-span-2">
+        <form onSubmit={save} className="glass grid h-fit gap-3 rounded-drop p-5 lg:col-span-2 min-w-0 w-full overflow-hidden">
           <div className="flex items-center justify-between">
             <h2 className="font-black text-ink">
               {form.id ? 'Sửa bài viết / poster' : 'Thêm poster / bài viết'}
@@ -279,13 +279,15 @@ export default function PostersTab() {
 
           {/* Link xem bài viết nếu đã có id hoặc slug */}
           {(form.id || form.slug) ? (
-            <div className="rounded-xl bg-dew-100/60 p-2.5 text-xs font-bold text-dew-900 flex items-center justify-between">
-              <span>Đường dẫn bài viết: <code className="font-mono text-dew-700">/bai-viet/{form.slug || form.id}</code></span>
+            <div className="rounded-xl bg-dew-100/60 p-2.5 text-xs font-bold text-dew-900 flex flex-wrap items-center justify-between gap-2 min-w-0">
+              <span className="min-w-0 truncate max-w-full">
+                Đường dẫn: <code className="font-mono text-dew-700">/bai-viet/{form.slug || form.id}</code>
+              </span>
               <a
                 href={`/bai-viet/${form.slug || form.id}`}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-1 text-dew-700 hover:underline"
+                className="shrink-0 inline-flex items-center gap-1 text-dew-700 hover:underline"
               >
                 <ExternalLink size={12} /> Xem thực tế
               </a>
@@ -313,12 +315,12 @@ export default function PostersTab() {
         </form>
 
         {/* Danh sách các poster & bài viết - Cột phải chiếm 1/3 */}
-        <div className="space-y-3 lg:col-span-1">
+        <div className="space-y-3 lg:col-span-1 min-w-0 w-full overflow-hidden">
           <h3 className="text-sm font-black text-slate-700 uppercase tracking-wider">
             Danh sách bài viết & poster ({rows.length})
           </h3>
 
-          <ul className="grid h-fit gap-3">
+          <ul className="grid h-fit gap-3 min-w-0">
             {rows.length === 0 ? (
               <li className="glass rounded-2xl p-6 text-center text-sm font-semibold text-slate-500">
                 Chưa có poster hoặc bài viết nào. Hãy bấm nút <span className="font-bold text-dew-700">AI Viết Bài Chuẩn SEO</span> để tạo bài đầu tiên!
@@ -326,68 +328,62 @@ export default function PostersTab() {
             ) : null}
 
             {rows.map((row) => (
-              <li key={row.id} className="glass flex items-center gap-3 rounded-2xl p-3 hover:border-dew-300 transition">
-                <div className="h-14 w-20 shrink-0 overflow-hidden rounded-xl bg-dew-100 flex items-center justify-center">
+              <li key={row.id} className="glass flex items-center gap-2 rounded-2xl p-2.5 min-w-0 hover:border-dew-300 transition">
+                <div className="h-12 w-14 shrink-0 overflow-hidden rounded-xl bg-dew-100 flex items-center justify-center">
                   {row.image ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img src={row.image} alt="" className="h-full w-full object-cover" />
                   ) : (
-                    <FileText size={22} className="text-dew-400" />
+                    <FileText size={20} className="text-dew-400" />
                   )}
                 </div>
 
                 <div className="min-w-0 flex-1">
-                  <p className="flex items-center gap-1.5 truncate text-sm font-black text-ink">
-                    {row.pinned ? <Pin size={12} className="text-amber-500 shrink-0" /> : null}
-                    {row.title}
+                  <p className="flex items-center gap-1 truncate text-xs font-black text-ink" title={row.title}>
+                    {row.pinned ? <Pin size={11} className="text-amber-500 shrink-0" /> : null}
+                    <span className="truncate">{row.title}</span>
                   </p>
-                  <div className="mt-1 flex flex-wrap items-center gap-2 text-xs font-semibold text-slate-500">
-                    <span className="rounded-md bg-dew-50 px-2 py-0.5 text-dew-700">{row.category}</span>
-                    <span>·</span>
-                    <span className={row.published ? 'text-emerald-600' : 'text-slate-400'}>
-                      {row.published ? 'Đang hiển thị' : 'Đang ẩn'}
-                    </span>
+                  <div className="mt-1 flex flex-wrap items-center gap-1.5 text-[11px] font-semibold text-slate-500">
+                    <span className="rounded bg-dew-50 px-1.5 py-0.5 text-dew-700">{row.category}</span>
                     {row.seoScore ? (
-                      <span className="rounded bg-emerald-50 px-1.5 py-0.5 text-[10px] font-black text-emerald-700 border border-emerald-200">
+                      <span className="rounded bg-emerald-50 px-1.5 py-0.2 text-[10px] font-black text-emerald-700 border border-emerald-200">
                         SEO {row.seoScore}
                       </span>
                     ) : null}
                   </div>
                 </div>
 
-                {/* Nút xem trực tiếp bài viết */}
-                <a
-                  href={`/bai-viet/${row.slug || row.id}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  title="Xem trang bài viết trên web"
-                  className="rounded-full p-2 text-slate-400 hover:bg-dew-50 hover:text-dew-700 transition"
-                >
-                  <ExternalLink size={16} />
-                </a>
-
-                {/* Sửa */}
-                <button
-                  type="button"
-                  aria-label="Sửa"
-                  onClick={() => {
-                    setForm(row);
-                    if (row.content) setShowFullContent(true);
-                  }}
-                  className="rounded-full p-2 hover:bg-dew-50 text-slate-600 transition"
-                >
-                  <Pencil size={16} />
-                </button>
-
-                {/* Xóa */}
-                <button
-                  type="button"
-                  aria-label="Xóa"
-                  onClick={() => remove(row.id)}
-                  className="rounded-full p-2 text-red-500 hover:bg-red-50 transition"
-                >
-                  <Trash2 size={16} />
-                </button>
+                {/* Nút hành động */}
+                <div className="flex shrink-0 items-center gap-0.5">
+                  <a
+                    href={`/bai-viet/${row.slug || row.id}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    title="Xem trang bài viết trên web"
+                    className="rounded-lg p-1.5 text-slate-400 hover:bg-dew-50 hover:text-dew-700 transition"
+                  >
+                    <ExternalLink size={14} />
+                  </a>
+                  <button
+                    type="button"
+                    aria-label="Sửa"
+                    onClick={() => {
+                      setForm(row);
+                      if (row.content) setShowFullContent(true);
+                    }}
+                    className="rounded-lg p-1.5 text-slate-500 hover:bg-dew-50 transition"
+                  >
+                    <Pencil size={14} />
+                  </button>
+                  <button
+                    type="button"
+                    aria-label="Xóa"
+                    onClick={() => remove(row.id)}
+                    className="rounded-lg p-1.5 text-red-500 hover:bg-red-50 transition"
+                  >
+                    <Trash2 size={14} />
+                  </button>
+                </div>
               </li>
             ))}
           </ul>
