@@ -21,7 +21,7 @@ export default async function HomePage() {
       <Header site={site} />
       <main>
         <Hero site={site} />
-        <Showcase lmsUrl={site.lmsUrl} />
+        <Showcase site={site} lmsUrl={site.lmsUrl} />
         <Features />
         <Journey />
         <Posters posters={posters} lmsUrl={site.lmsUrl} />

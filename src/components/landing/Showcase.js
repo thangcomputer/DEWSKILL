@@ -53,9 +53,17 @@ const TABS = [
   },
 ];
 
-export default function Showcase({ lmsUrl }) {
+export default function Showcase({ site, lmsUrl }) {
   const [activeTab, setActiveTab] = useState('path');
-  const current = TABS.find((t) => t.id === activeTab) || TABS[0];
+
+  const tabs = TABS.map((tab) => {
+    if (tab.id === 'path') return { ...tab, image: site?.showcasePathImage || tab.image };
+    if (tab.id === 'video') return { ...tab, image: site?.showcaseVideoImage || tab.image };
+    if (tab.id === 'ai') return { ...tab, image: site?.showcaseAiImage || tab.image };
+    return tab;
+  });
+
+  const current = tabs.find((t) => t.id === activeTab) || tabs[0];
 
   return (
     <section id="trai-nghiem" className="relative scroll-mt-20 overflow-hidden py-20">

@@ -9,6 +9,7 @@ export default function SiteTab() {
   const [message, setMessage] = useState('');
   const [uploadingLogo, setUploadingLogo] = useState(false);
   const [uploadingFavicon, setUploadingFavicon] = useState(false);
+  const [uploadingShowcase, setUploadingShowcase] = useState({});
   const [showAdminPassword, setShowAdminPassword] = useState(false);
   const [showGoogleSecret, setShowGoogleSecret] = useState(false);
   const [copiedUri, setCopiedUri] = useState(false);
@@ -93,6 +94,23 @@ export default function SiteTab() {
       setMessage(err.message);
     } finally {
       setUploading(false);
+    }
+  }
+
+  async function handleShowcaseUpload(file, field) {
+    if (!file) return;
+    setUploadingShowcase((prev) => ({ ...prev, [field]: true }));
+    setMessage('');
+    try {
+      const data = new FormData();
+      data.append('file', file);
+      const res = await adminFetch('/api/admin/upload', { method: 'POST', body: data });
+      setForm((prev) => ({ ...prev, [field]: res.url }));
+      setMessage('Đã tải ảnh lên thành công! Hãy nhấn "Lưu thay đổi" ở dưới cùng để áp dụng lên trang chủ.');
+    } catch (err) {
+      setMessage(err.message);
+    } finally {
+      setUploadingShowcase((prev) => ({ ...prev, [field]: false }));
     }
   }
 
@@ -255,11 +273,179 @@ export default function SiteTab() {
         </div>
       </div>
 
-      {/* KHỐI 2: ĐỊA CHỈ LMS */}
+      {/* KHỐI 2: HÌNH ẢNH CÁC PHẦN TRÊN TRANG CHỦ (SHOWCASE THỰC TẾ) */}
+      <div className="glass rounded-drop p-6">
+        <div className="mb-4 flex items-center justify-between border-b border-dew-100 pb-3">
+          <div className="flex items-center gap-2">
+            <ImageIcon className="text-dew-700" size={20} />
+            <h3 className="text-base font-black text-dew-900">
+              2. Hình ảnh minh họa các tính năng (Showcase thực tế trên trang chủ)
+            </h3>
+          </div>
+          <span className="text-xs font-semibold text-slate-500 hidden sm:inline">
+            Khung ảnh hiển thị trong mockup trình duyệt của 3 tab
+          </span>
+        </div>
+
+        <p className="mb-4 text-xs font-medium text-slate-600 leading-relaxed">
+          Tải ảnh chụp màn hình thực tế giao diện học tập để thay thế ảnh minh họa ở phần &quot;Trải nghiệm học tập thực chiến&quot;. Khuyến nghị tỉ lệ 16:10 hoặc 4:3 (kích thước khoảng 1200x800px).
+        </p>
+
+        <div className="grid gap-5 md:grid-cols-3">
+          {/* Tab 1: Lộ trình từng chặng */}
+          <div className="rounded-2xl border border-dew-200/80 bg-white/70 p-4 shadow-xs flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm font-extrabold text-slate-800">Tab 1: Lộ trình chặng</span>
+                {form.showcasePathImage && form.showcasePathImage !== '/screenshots/lo-trinh-chang.png' ? (
+                  <button
+                    type="button"
+                    onClick={() => setForm({ ...form, showcasePathImage: '/screenshots/lo-trinh-chang.png' })}
+                    className="flex items-center gap-1 text-xs font-bold text-dew-700 hover:underline"
+                  >
+                    <RefreshCw size={11} /> Mặc định
+                  </button>
+                ) : null}
+              </div>
+
+              {/* Preview */}
+              <div className="mb-3 flex h-36 items-center justify-center rounded-xl bg-slate-900/5 border border-dashed border-dew-200 overflow-hidden p-1.5">
+                <img
+                  src={form.showcasePathImage || '/screenshots/lo-trinh-chang.png'}
+                  alt="Lộ trình từng chặng"
+                  className="h-full w-full object-cover rounded-lg"
+                />
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label className="flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-dew-300 bg-dew-50 px-3 py-2 text-xs font-extrabold text-dew-800 hover:bg-dew-100 transition">
+                <Upload size={14} />
+                <span>{uploadingShowcase.showcasePathImage ? 'Đang tải...' : 'Tải ảnh Lộ trình lên'}</span>
+                <input
+                  type="file"
+                  accept="image/png,image/jpeg,image/webp"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) handleShowcaseUpload(file, 'showcasePathImage');
+                  }}
+                />
+              </label>
+              <input
+                className="field text-xs py-1"
+                value={form.showcasePathImage || ''}
+                placeholder="/screenshots/lo-trinh-chang.png"
+                onChange={(e) => setForm({ ...form, showcasePathImage: e.target.value })}
+              />
+            </div>
+          </div>
+
+          {/* Tab 2: Video ngắn có câu hỏi */}
+          <div className="rounded-2xl border border-dew-200/80 bg-white/70 p-4 shadow-xs flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm font-extrabold text-slate-800">Tab 2: Video bài giảng</span>
+                {form.showcaseVideoImage && form.showcaseVideoImage !== '/screenshots/video-bai-giang.png' ? (
+                  <button
+                    type="button"
+                    onClick={() => setForm({ ...form, showcaseVideoImage: '/screenshots/video-bai-giang.png' })}
+                    className="flex items-center gap-1 text-xs font-bold text-dew-700 hover:underline"
+                  >
+                    <RefreshCw size={11} /> Mặc định
+                  </button>
+                ) : null}
+              </div>
+
+              {/* Preview */}
+              <div className="mb-3 flex h-36 items-center justify-center rounded-xl bg-slate-900/5 border border-dashed border-dew-200 overflow-hidden p-1.5">
+                <img
+                  src={form.showcaseVideoImage || '/screenshots/video-bai-giang.png'}
+                  alt="Video bài giảng tương tác"
+                  className="h-full w-full object-cover rounded-lg"
+                />
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label className="flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-dew-300 bg-dew-50 px-3 py-2 text-xs font-extrabold text-dew-800 hover:bg-dew-100 transition">
+                <Upload size={14} />
+                <span>{uploadingShowcase.showcaseVideoImage ? 'Đang tải...' : 'Tải ảnh Video lên'}</span>
+                <input
+                  type="file"
+                  accept="image/png,image/jpeg,image/webp"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) handleShowcaseUpload(file, 'showcaseVideoImage');
+                  }}
+                />
+              </label>
+              <input
+                className="field text-xs py-1"
+                value={form.showcaseVideoImage || ''}
+                placeholder="/screenshots/video-bai-giang.png"
+                onChange={(e) => setForm({ ...form, showcaseVideoImage: e.target.value })}
+              />
+            </div>
+          </div>
+
+          {/* Tab 3: AI chấm điểm & gợi ý */}
+          <div className="rounded-2xl border border-dew-200/80 bg-white/70 p-4 shadow-xs flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm font-extrabold text-slate-800">Tab 3: AI chấm điểm</span>
+                {form.showcaseAiImage && form.showcaseAiImage !== '/screenshots/ai-cham-diem.png' ? (
+                  <button
+                    type="button"
+                    onClick={() => setForm({ ...form, showcaseAiImage: '/screenshots/ai-cham-diem.png' })}
+                    className="flex items-center gap-1 text-xs font-bold text-dew-700 hover:underline"
+                  >
+                    <RefreshCw size={11} /> Mặc định
+                  </button>
+                ) : null}
+              </div>
+
+              {/* Preview */}
+              <div className="mb-3 flex h-36 items-center justify-center rounded-xl bg-slate-900/5 border border-dashed border-dew-200 overflow-hidden p-1.5">
+                <img
+                  src={form.showcaseAiImage || '/screenshots/ai-cham-diem.png'}
+                  alt="AI chấm điểm và gợi ý"
+                  className="h-full w-full object-cover rounded-lg"
+                />
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label className="flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-dew-300 bg-dew-50 px-3 py-2 text-xs font-extrabold text-dew-800 hover:bg-dew-100 transition">
+                <Upload size={14} />
+                <span>{uploadingShowcase.showcaseAiImage ? 'Đang tải...' : 'Tải ảnh AI lên'}</span>
+                <input
+                  type="file"
+                  accept="image/png,image/jpeg,image/webp"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) handleShowcaseUpload(file, 'showcaseAiImage');
+                  }}
+                />
+              </label>
+              <input
+                className="field text-xs py-1"
+                value={form.showcaseAiImage || ''}
+                placeholder="/screenshots/ai-cham-diem.png"
+                onChange={(e) => setForm({ ...form, showcaseAiImage: e.target.value })}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* KHỐI 3: ĐỊA CHỈ LMS */}
       <div className="glass rounded-drop p-6">
         <div className="mb-4 flex items-center gap-2 border-b border-dew-100 pb-3">
           <Globe className="text-dew-700" size={20} />
-          <h3 className="text-base font-black text-dew-900">2. Kết nối cổng LMS học tập</h3>
+          <h3 className="text-base font-black text-dew-900">3. Kết nối cổng LMS học tập</h3>
         </div>
 
         <label className="grid gap-1.5 text-sm font-extrabold text-slate-700">
@@ -275,11 +461,11 @@ export default function SiteTab() {
         </label>
       </div>
 
-      {/* KHỐI 3: NỘI DUNG ĐẦU TRANG & GHI CHÚ */}
+      {/* KHỐI 4: NỘI DUNG ĐẦU TRANG & GHI CHÚ */}
       <div className="glass rounded-drop p-6">
         <div className="mb-4 flex items-center gap-2 border-b border-dew-100 pb-3">
           <Sparkles className="text-dew-700" size={20} />
-          <h3 className="text-base font-black text-dew-900">3. Nội dung trang chủ</h3>
+          <h3 className="text-base font-black text-dew-900">4. Nội dung trang chủ</h3>
         </div>
 
         <div className="grid gap-4">
@@ -312,11 +498,11 @@ export default function SiteTab() {
         </div>
       </div>
 
-      {/* KHỐI 4: MẠNG XÃ HỘI & LIÊN HỆ */}
+      {/* KHỐI 5: MẠNG XÃ HỘI & LIÊN HỆ */}
       <div className="glass rounded-drop p-6">
         <div className="mb-4 flex items-center gap-2 border-b border-dew-100 pb-3">
           <Share2 className="text-dew-700" size={20} />
-          <h3 className="text-base font-black text-dew-900">4. Liên hệ & Kênh Mạng xã hội chân trang</h3>
+          <h3 className="text-base font-black text-dew-900">5. Liên hệ & Kênh Mạng xã hội chân trang</h3>
         </div>
 
         <div className="grid gap-4 md:grid-cols-2">
@@ -372,11 +558,11 @@ export default function SiteTab() {
         </div>
       </div>
 
-      {/* KHỐI 5: ỨNG DỤNG DI ĐỘNG */}
+      {/* KHỐI 6: ỨNG DỤNG DI ĐỘNG */}
       <div className="glass rounded-drop p-6">
         <div className="mb-4 flex items-center gap-2 border-b border-dew-100 pb-3">
           <Smartphone className="text-dew-700" size={20} />
-          <h3 className="text-base font-black text-dew-900">5. Link ứng dụng di động (Android & iOS)</h3>
+          <h3 className="text-base font-black text-dew-900">6. Link ứng dụng di động (Android & iOS)</h3>
         </div>
 
         <div className="grid gap-4 md:grid-cols-2">
@@ -402,13 +588,13 @@ export default function SiteTab() {
         </div>
       </div>
 
-      {/* KHỐI 6: BẢO MẬT & MẬT KHẨU QUẢN TRỊ ADMIN */}
+      {/* KHỐI 7: BẢO MẬT & MẬT KHẨU QUẢN TRỊ ADMIN */}
       <div className="glass rounded-drop p-6">
         <div className="mb-4 flex items-center justify-between border-b border-dew-100 pb-3 flex-wrap gap-2">
           <div className="flex items-center gap-2">
             <Lock className="text-dew-700" size={20} />
             <h3 className="text-base font-black text-dew-900">
-              6. Bảo mật & Mật khẩu Quản trị Admin
+              7. Bảo mật & Mật khẩu Quản trị Admin
             </h3>
           </div>
           {form.hasAdminPassword ? (
@@ -611,13 +797,13 @@ export default function SiteTab() {
         </div>
       </div>
 
-      {/* KHỐI 7: CẤU HÌNH ĐĂNG NHẬP GOOGLE (GOOGLE AUTHENTICATION) */}
+      {/* KHỐI 8: CẤU HÌNH ĐĂNG NHẬP GOOGLE (GOOGLE AUTHENTICATION) */}
       <div className="glass rounded-drop p-6">
         <div className="mb-4 flex items-center justify-between border-b border-dew-100 pb-3 flex-wrap gap-2">
           <div className="flex items-center gap-2">
             <Globe className="text-dew-700" size={20} />
             <h3 className="text-base font-black text-dew-900">
-              7. Cấu hình Đăng nhập Google (Google Authentication)
+              8. Cấu hình Đăng nhập Google (Google Authentication)
             </h3>
           </div>
           {form.googleClientId && form.googleClientSecret ? (
