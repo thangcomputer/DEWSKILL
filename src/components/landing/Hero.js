@@ -139,17 +139,17 @@ export default function Hero({ site }) {
           </div>
 
           {/* Circular glass bubble */}
-          <div className="glass relative z-10 flex h-64 w-64 items-center justify-center rounded-full sm:h-80 sm:w-80 md:h-96 md:w-96 shadow-2xl shadow-dew-900/10 border border-white/90">
+          <div className="glass relative z-0 flex h-64 w-64 items-center justify-center rounded-full sm:h-80 sm:w-80 md:h-96 md:w-96 shadow-2xl shadow-dew-900/10 border border-white/90">
             <div className="h-48 w-48 sm:h-64 sm:w-64 md:h-72 md:w-72 flex items-center justify-center">
               <Mascot name="doc-sach" size={240} className="animate-floaty" />
             </div>
           </div>
 
           {/* Floating Badges (safely positioned within container boundaries) */}
-          <div className="glass absolute left-2 top-4 sm:left-0 sm:top-8 rounded-drop px-3.5 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-black text-dew-700 shadow-md">
+          <div className="glass absolute z-20 left-2 top-4 sm:left-0 sm:top-8 rounded-drop px-3.5 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-black text-dew-700 shadow-md">
             ⚡ +15 XP
           </div>
-          <div className="glass absolute right-2 bottom-4 sm:right-0 sm:bottom-8 rounded-drop px-3.5 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-black text-orange-600 shadow-md">
+          <div className="glass absolute z-20 right-2 bottom-4 sm:right-0 sm:bottom-8 rounded-drop px-3.5 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-black text-orange-600 shadow-md">
             🔥 7 ngày liên tục
           </div>
         </div>
