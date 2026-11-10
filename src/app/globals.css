@@ -34,10 +34,10 @@ body {
   to { transform: rotate(0deg); }
 }
 .animate-spin-slow {
-  animation: spinSlow 30s linear infinite;
+  animation: spinSlow 20s linear infinite;
 }
 .animate-spin-reverse-slow {
-  animation: spinReverseSlow 25s linear infinite;
+  animation: spinReverseSlow 16s linear infinite;
 }
 
 @keyframes floatSoft {

@@ -129,13 +129,19 @@ export default function Hero({ site }) {
         {/* Right Column: Floating Mascot with EdTech Tech Radar Rings & XP badges */}
         <div className="reveal-right delay-150 relative isolate mx-auto flex items-center justify-center w-full max-w-md">
           {/* Tech Radar Rings behind Mascot */}
-          <div className="pointer-events-none absolute -inset-8 flex items-center justify-center" aria-hidden="true">
+          <div className="pointer-events-none absolute -inset-10 flex items-center justify-center" aria-hidden="true">
             {/* Halo hào quang công nghệ */}
             <div className="absolute h-80 w-80 sm:h-[400px] sm:w-[400px] rounded-full bg-gradient-to-tr from-emerald-400/20 via-sky-400/15 to-transparent blur-2xl" />
-            {/* Vòng quay radar nét đứt (vòng trong) - xoay thuận kim đồng hồ */}
-            <div className="h-72 w-72 sm:h-96 sm:w-96 rounded-full border border-dew-400/50 border-dashed animate-spin-slow" />
-            {/* Vòng tròn công nghệ nét chấm (vòng ngoài) - xoay ngược kim đồng hồ */}
-            <div className="absolute h-80 w-80 sm:h-[420px] sm:w-[420px] rounded-full border border-sky-400/40 border-dotted animate-spin-reverse-slow" />
+            {/* Vòng quay radar nét đứt (vòng trong) - xoay thuận chiều kim đồng hồ */}
+            <div className="relative h-64 w-64 sm:h-[340px] sm:w-[340px] rounded-full border-2 border-dew-400/60 border-dashed animate-spin-slow flex items-center justify-between">
+              <span className="h-2 w-2 rounded-full bg-amber-400 shadow-sm shadow-amber-400 -ml-1" />
+              <span className="h-2 w-2 rounded-full bg-dew-500 shadow-sm shadow-dew-500 -mr-1" />
+            </div>
+            {/* Vòng tròn công nghệ nét đứt (vòng ngoài) - xoay NGƯỢC chiều kim đồng hồ */}
+            <div className="absolute h-80 w-80 sm:h-[430px] sm:w-[430px] rounded-full border-2 border-sky-400/50 border-dashed animate-spin-reverse-slow flex items-center justify-between">
+              <span className="h-2.5 w-2.5 rounded-full bg-sky-400 shadow-sm shadow-sky-400 -ml-1.5" />
+              <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-sm shadow-emerald-400 -mr-1.5" />
+            </div>
           </div>
 
           {/* Circular glass bubble - z-index: -2 */}

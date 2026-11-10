@@ -32,9 +32,19 @@ module.exports = {
           '0%,100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-10px)' },
         },
+        spinSlow: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        },
+        spinReverseSlow: {
+          '0%': { transform: 'rotate(360deg)' },
+          '100%': { transform: 'rotate(0deg)' },
+        },
       },
       animation: {
         floaty: 'floaty 4s ease-in-out infinite',
+        'spin-slow': 'spinSlow 20s linear infinite',
+        'spin-reverse-slow': 'spinReverseSlow 16s linear infinite',
       },
     },
   },
