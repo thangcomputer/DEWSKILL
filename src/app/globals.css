@@ -29,8 +29,15 @@ body {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+@keyframes spinReverseSlow {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
 .animate-spin-slow {
-  animation: spinSlow 35s linear infinite;
+  animation: spinSlow 30s linear infinite;
+}
+.animate-spin-reverse-slow {
+  animation: spinReverseSlow 25s linear infinite;
 }
 
 @keyframes floatSoft {

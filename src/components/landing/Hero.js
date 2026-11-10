@@ -127,19 +127,22 @@ export default function Hero({ site }) {
         </div>
 
         {/* Right Column: Floating Mascot with EdTech Tech Radar Rings & XP badges */}
-        <div className="reveal-right delay-150 relative mx-auto flex items-center justify-center w-full max-w-md">
+        <div className="reveal-right delay-150 relative isolate mx-auto flex items-center justify-center w-full max-w-md">
           {/* Tech Radar Rings behind Mascot */}
           <div className="pointer-events-none absolute -inset-8 flex items-center justify-center" aria-hidden="true">
             {/* Halo hào quang công nghệ */}
             <div className="absolute h-80 w-80 sm:h-[400px] sm:w-[400px] rounded-full bg-gradient-to-tr from-emerald-400/20 via-sky-400/15 to-transparent blur-2xl" />
-            {/* Vòng quay radar nét đứt */}
-            <div className="h-72 w-72 sm:h-96 sm:w-96 rounded-full border border-dew-400/40 border-dashed animate-spin-slow" />
-            {/* Vòng tròn công nghệ nét chấm */}
-            <div className="absolute h-80 w-80 sm:h-[420px] sm:w-[420px] rounded-full border border-sky-400/30 border-dotted" />
+            {/* Vòng quay radar nét đứt (vòng trong) - xoay thuận kim đồng hồ */}
+            <div className="h-72 w-72 sm:h-96 sm:w-96 rounded-full border border-dew-400/50 border-dashed animate-spin-slow" />
+            {/* Vòng tròn công nghệ nét chấm (vòng ngoài) - xoay ngược kim đồng hồ */}
+            <div className="absolute h-80 w-80 sm:h-[420px] sm:w-[420px] rounded-full border border-sky-400/40 border-dotted animate-spin-reverse-slow" />
           </div>
 
-          {/* Circular glass bubble */}
-          <div className="glass relative z-0 flex h-64 w-64 items-center justify-center rounded-full sm:h-80 sm:w-80 md:h-96 md:w-96 shadow-2xl shadow-dew-900/10 border border-white/90">
+          {/* Circular glass bubble - z-index: -2 */}
+          <div
+            className="glass relative flex h-64 w-64 items-center justify-center rounded-full sm:h-80 sm:w-80 md:h-96 md:w-96 shadow-2xl shadow-dew-900/10 border border-white/90"
+            style={{ zIndex: -2 }}
+          >
             <div className="h-48 w-48 sm:h-64 sm:w-64 md:h-72 md:w-72 flex items-center justify-center">
               <Mascot name="doc-sach" size={240} className="animate-floaty" />
             </div>
