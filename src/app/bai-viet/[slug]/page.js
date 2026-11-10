@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, Calendar, CheckCircle2, Clock, Share2, Sparkles, Tag } from 'lucide-react';
+import { ArrowLeft, Calendar, Clock, Share2, Sparkles, Tag } from 'lucide-react';
 import { getPoster, getSite, listPosters } from '@/lib/store';
 import { lmsLink } from '@/lib/lms';
 import MarkdownView from '@/components/common/MarkdownView';
@@ -125,11 +125,6 @@ export default async function ArticlePage({ params }) {
             <span className="rounded-full bg-dew-100 px-3 py-1 text-xs font-extrabold text-dew-800">
               {poster.category}
             </span>
-            {poster.seoScore ? (
-              <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-bold text-emerald-700 border border-emerald-200">
-                <CheckCircle2 size={12} /> Chuẩn SEO Top Google ({poster.seoScore}/100)
-              </span>
-            ) : null}
             <span className="inline-flex items-center gap-1 text-xs font-semibold text-slate-400">
               <Calendar size={13} /> {new Date(poster.createdAt).toLocaleDateString('vi-VN')}
             </span>
@@ -235,3 +230,4 @@ export default async function ArticlePage({ params }) {
     </div>
   );
 }
+
