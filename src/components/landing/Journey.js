@@ -7,12 +7,18 @@ const STEPS = [
   { n: 4, title: 'Vượt chặng', text: 'Hoàn thành chặng để mở chặng mới, nhận huy hiệu ghi dấu tiến bộ.', mascot: 'tot-nghiep-vui-ve' },
 ];
 
-export default function Journey() {
+export default function Journey({ site }) {
   return (
-    <section id="lo-trinh" className="scroll-mt-20 bg-white/60 py-16">
+    <section id="lo-trinh" className="scroll-mt-24 bg-white/60 py-10 sm:py-14">
       <div className="mx-auto max-w-6xl px-4">
         <div className="reveal mx-auto max-w-2xl text-center">
-          <h2 className="section-title">Hành trình của bạn cùng giọt nước</h2>
+          <h2 className="text-2xl font-black tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
+            {site?.journeyTitle || 'Hành trình của bạn cùng giọt nước'}
+          </h2>
+          <p className="mt-2 text-sm sm:text-base font-medium text-slate-600">
+            {site?.journeySubtitle ||
+              'Lộ trình 4 bước đơn giản từ người mới bắt đầu đến thành thạo tin học văn phòng.'}
+          </p>
         </div>
         <ol className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {STEPS.map((step, idx) => (

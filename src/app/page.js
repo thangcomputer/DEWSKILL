@@ -22,10 +22,10 @@ export default async function HomePage() {
       <main>
         <Hero site={site} />
         <Showcase site={site} lmsUrl={site.lmsUrl} />
-        <Features />
-        <Journey />
-        <Posters posters={posters} lmsUrl={site.lmsUrl} />
-        <LeadForm hotline={site.hotline} />
+        <Features site={site} />
+        <Journey site={site} />
+        <Posters site={site} posters={posters} lmsUrl={site.lmsUrl} />
+        <LeadForm site={site} hotline={site.hotline} />
       </main>
       <Footer site={site} />
       <AiChatWidget lmsUrl={site.lmsUrl} />

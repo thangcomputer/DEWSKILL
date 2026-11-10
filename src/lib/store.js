@@ -42,9 +42,32 @@ const SITE_DEFAULTS = {
   heroTitle: 'Học tin học như chơi game cùng DewSkill',
   heroSubtitle: '',
   footerNote: '',
+  // Section 1: Trải nghiệm (#trai-nghiem)
+  showcaseTitle: 'Học tin học như chơi game, tiến bộ thấy rõ từng ngày',
+  showcaseSubtitle: 'Ảnh chụp thực tế từ hệ sinh thái học tập: Chặng học rõ ràng, bài giảng video ngắn và AI chấm điểm tức thì.',
   showcasePathImage: '/screenshots/lo-trinh-chang.png',
   showcaseVideoImage: '/screenshots/video-bai-giang.png',
   showcaseAiImage: '/screenshots/ai-cham-diem.png',
+  ctaTitle: 'Học thử miễn phí ngay hôm nay!',
+  ctaSubtitle: 'Tạo tài khoản nhanh chóng chỉ với số điện thoại để vào luyện tập các chặng mở đầu, xem video lý thuyết và tích lũy XP. Hoàn toàn không mất phí ban đầu.',
+  ctaMascotImage: '',
+
+  // Section 2: Tính năng (#tinh-nang)
+  featuresTitle: 'Tự học mà vẫn có động lực',
+  featuresSubtitle: 'Mỗi ngày 10 đến 15 phút là đủ để tiến bộ đều đặn với phương pháp sư phạm số thông minh.',
+
+  // Section 3: Lộ trình (#lo-trinh)
+  journeyTitle: 'Hành trình của bạn cùng giọt nước',
+  journeySubtitle: 'Lộ trình 4 bước đơn giản từ người mới bắt đầu đến thành thạo tin học văn phòng.',
+
+  // Section 4: Poster & Tin (#poster)
+  postersTitle: 'Poster và tin mới',
+  postersSubtitle: 'Ưu đãi, mẹo học và thông báo mới nhất.',
+
+  // Section 5: Nhận tư vấn (#tu-van)
+  leadTitle: 'Cần bạn đồng hành?',
+  leadSubtitle: 'Để lại số điện thoại, chúng tôi sẽ hướng dẫn bạn tạo tài khoản và bắt đầu lộ trình tự học.',
+  leadImage: '',
   adminPassword: '',
   googleClientId: '',
   googleClientSecret: '',

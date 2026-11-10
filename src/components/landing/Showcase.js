@@ -121,7 +121,7 @@ export default function Showcase({ site, lmsUrl }) {
   const current = tabs.find((t) => t.id === activeTab) || tabs[0];
 
   return (
-    <section id="trai-nghiem" className="relative scroll-mt-20 overflow-hidden py-20">
+    <section id="trai-nghiem" className="relative scroll-mt-24 overflow-hidden py-12 sm:py-16">
       {/* Background Glow */}
       <div className="pointer-events-none absolute left-1/2 top-10 -translate-x-1/2 h-96 w-full max-w-5xl rounded-full bg-dew-100/60 blur-3xl" />
 
@@ -132,10 +132,10 @@ export default function Showcase({ site, lmsUrl }) {
             <Sparkles size={14} className="text-amber-500" /> Trải nghiệm học thực tế trên nền tảng
           </span>
           <h2 className="section-title mt-4">
-            Học tin học như chơi game, tiến bộ thấy rõ từng ngày
+            {site?.showcaseTitle || 'Học tin học như chơi game, tiến bộ thấy rõ từng ngày'}
           </h2>
           <p className="mt-3 text-base font-medium text-slate-600 sm:text-lg">
-            Ảnh chụp thực tế từ hệ sinh thái học tập: Chặng học rõ ràng, bài giảng video ngắn và AI chấm điểm tức thì.
+            {site?.showcaseSubtitle || 'Ảnh chụp thực tế từ hệ sinh thái học tập: Chặng học rõ ràng, bài giảng video ngắn và AI chấm điểm tức thì.'}
           </p>
         </div>
 
@@ -271,7 +271,7 @@ export default function Showcase({ site, lmsUrl }) {
         </div>
 
         {/* Free Portal Call-To-Action Banner (Phần học miễn phí đăng ký ngay) */}
-        <div className="relative mt-16 overflow-hidden rounded-[2rem] sm:rounded-[2.5rem] bg-gradient-to-br from-emerald-950 via-dew-900 to-dew-700 p-6 sm:p-10 lg:p-12 text-white shadow-2xl shadow-dew-950/30">
+        <div className="relative mt-12 overflow-hidden rounded-[2rem] sm:rounded-[2.5rem] bg-gradient-to-br from-emerald-950 via-dew-900 to-dew-700 p-6 sm:p-8 lg:p-10 text-white shadow-2xl shadow-dew-950/30">
           {/* Subtle water ripple circle */}
           <div className="pointer-events-none absolute -right-20 -top-20 h-80 w-80 rounded-full bg-dew-400/20 blur-3xl" />
 
@@ -281,10 +281,11 @@ export default function Showcase({ site, lmsUrl }) {
                 <Zap size={14} className="text-amber-300" /> Bắt đầu không rủi ro
               </span>
               <h3 className="mt-4 text-2xl font-black leading-tight sm:text-3xl lg:text-4xl text-white">
-                Học thử miễn phí ngay hôm nay!
+                {site?.ctaTitle || 'Học thử miễn phí ngay hôm nay!'}
               </h3>
               <p className="mt-3 text-sm font-medium leading-relaxed text-dew-100 sm:text-base">
-                Tạo tài khoản nhanh chóng chỉ với số điện thoại để vào luyện tập các chặng mở đầu, xem video lý thuyết và tích lũy XP. Hoàn toàn không mất phí ban đầu.
+                {site?.ctaSubtitle ||
+                  'Tạo tài khoản nhanh chóng chỉ với số điện thoại để vào luyện tập các chặng mở đầu, xem video lý thuyết và tích lũy XP. Hoàn toàn không mất phí ban đầu.'}
               </p>
 
               <div className="mt-6 flex flex-wrap gap-x-4 gap-y-2 text-xs font-bold text-dew-100">
@@ -318,8 +319,17 @@ export default function Showcase({ site, lmsUrl }) {
             {/* Mascot Celebration visual */}
             <div className="flex flex-col items-center justify-center text-center">
               <div className="relative">
-                <div className="flex h-48 w-48 sm:h-56 sm:w-56 md:h-64 md:w-64 items-center justify-center rounded-full bg-white/15 backdrop-blur">
-                  <Mascot name="quyet-tam" size={180} className="animate-floaty" />
+                <div className="flex h-44 w-44 sm:h-52 sm:w-52 md:h-60 md:w-60 items-center justify-center rounded-full bg-white/15 backdrop-blur p-4">
+                  {site?.ctaMascotImage ? (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img
+                      src={site.ctaMascotImage}
+                      alt="Linh vật học thử"
+                      className="h-full w-full object-contain animate-floaty"
+                    />
+                  ) : (
+                    <Mascot name="quyet-tam" size={170} className="animate-floaty" />
+                  )}
                 </div>
                 <span className="glass absolute left-0 top-3 sm:-left-2 sm:top-4 rounded-full bg-amber-400 px-3 py-1 sm:px-3.5 sm:py-1.5 text-[11px] sm:text-xs font-black text-amber-950 shadow-md">
                   ⚡ 0đ học thử

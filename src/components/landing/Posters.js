@@ -64,7 +64,7 @@ function PosterCard({ poster, lmsUrl }) {
   );
 }
 
-export default function Posters({ posters = [], lmsUrl }) {
+export default function Posters({ site, posters = [], lmsUrl }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(3);
   const isPausedRef = useRef(false);
@@ -138,10 +138,14 @@ export default function Posters({ posters = [], lmsUrl }) {
   if (!posters || posters.length === 0) return null;
 
   return (
-    <section id="poster" className="mx-auto max-w-6xl scroll-mt-20 px-4 py-16">
+    <section id="poster" className="mx-auto max-w-6xl scroll-mt-24 px-4 py-10 sm:py-14">
       <div className="reveal mx-auto max-w-2xl text-center">
-        <h2 className="section-title">Poster và tin mới</h2>
-        <p className="mt-3 font-medium text-slate-600">Ưu đãi, mẹo học và thông báo mới nhất.</p>
+        <h2 className="text-2xl font-black tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
+          {site?.postersTitle || 'Poster và tin mới'}
+        </h2>
+        <p className="mt-2 text-sm sm:text-base font-medium text-slate-600">
+          {site?.postersSubtitle || 'Ưu đãi, mẹo học và thông báo mới nhất.'}
+        </p>
       </div>
 
       {/* Khung Slider Carousel */}

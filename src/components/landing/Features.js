@@ -112,20 +112,21 @@ const FEATURES = [
   },
 ];
 
-export default function Features() {
+export default function Features({ site }) {
   return (
-    <section id="tinh-nang" className="mx-auto max-w-6xl scroll-mt-20 px-4 py-16 sm:py-20">
+    <section id="tinh-nang" className="mx-auto max-w-6xl scroll-mt-24 px-4 py-10 sm:py-14">
       {/* Section Header chuẩn giáo dục */}
       <div className="reveal mx-auto max-w-3xl text-center">
         <div className="inline-flex items-center gap-2 rounded-full border border-dew-200/80 bg-dew-100/70 px-4 py-1.5 text-xs sm:text-sm font-bold text-dew-800 shadow-xs backdrop-blur-sm">
           <GraduationCap className="h-4 w-4 text-dew-700" />
           <span>Phương pháp giáo dục tương tác 4.0</span>
         </div>
-        <h2 className="mt-4 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
-          Tự học mà vẫn có động lực
+        <h2 className="mt-4 text-2xl font-black tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
+          {site?.featuresTitle || 'Tự học mà vẫn có động lực'}
         </h2>
-        <p className="mt-3.5 text-base sm:text-lg font-medium leading-relaxed text-slate-600">
-          Mỗi ngày 10 đến 15 phút là đủ để tiến bộ đều đặn với phương pháp sư phạm số thông minh.
+        <p className="mt-2.5 text-sm sm:text-base font-medium leading-relaxed text-slate-600">
+          {site?.featuresSubtitle ||
+            'Mỗi ngày 10 đến 15 phút là đủ để tiến bộ đều đặn với phương pháp sư phạm số thông minh.'}
         </p>
       </div>
 

@@ -6,7 +6,7 @@ import Mascot from './Mascot';
 
 const NEEDS = ['Word', 'Excel', 'PowerPoint', 'Tin học cơ bản', 'Luyện thi chứng chỉ'];
 
-export default function LeadForm({ hotline }) {
+export default function LeadForm({ site, hotline }) {
   const [form, setForm] = useState({ name: '', phone: '', need: NEEDS[0], website: '' });
   const [state, setState] = useState({ status: 'idle', message: '' });
 
@@ -30,13 +30,25 @@ export default function LeadForm({ hotline }) {
   }
 
   return (
-    <section id="tu-van" className="mx-auto max-w-6xl scroll-mt-20 px-4 py-16">
+    <section id="tu-van" className="mx-auto max-w-6xl scroll-mt-24 px-4 py-10 sm:py-14">
       <div className="reveal-scale glass grid items-center gap-8 rounded-drop p-6 sm:p-10 md:grid-cols-[1fr_1.2fr]">
         <div className="text-center md:text-left">
-          <Mascot name="y-tuong" size={150} className="mx-auto md:mx-0" />
-          <h2 className="mt-2 text-2xl font-black text-ink sm:text-3xl">Cần bạn đồng hành?</h2>
+          {site?.leadImage ? (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
+              src={site.leadImage}
+              alt="Tư vấn học tập"
+              className="mx-auto md:mx-0 h-32 w-32 sm:h-36 sm:w-36 object-contain mb-2"
+            />
+          ) : (
+            <Mascot name="y-tuong" size={140} className="mx-auto md:mx-0" />
+          )}
+          <h2 className="mt-2 text-2xl font-black text-ink sm:text-3xl">
+            {site?.leadTitle || 'Cần bạn đồng hành?'}
+          </h2>
           <p className="mt-2 text-sm font-medium text-slate-600">
-            Để lại số điện thoại, chúng tôi sẽ hướng dẫn bạn tạo tài khoản và bắt đầu lộ trình tự học.
+            {site?.leadSubtitle ||
+              'Để lại số điện thoại, chúng tôi sẽ hướng dẫn bạn tạo tài khoản và bắt đầu lộ trình tự học.'}
             {hotline ? ` Hotline: ${hotline}.` : ''}
           </p>
         </div>
