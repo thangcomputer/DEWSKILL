@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { Menu, X, PlayCircle, Sparkles, Map, Newspaper, MessageSquare, ExternalLink, ArrowRight, Phone } from 'lucide-react';
 import { lmsLink } from '@/lib/lms';
@@ -49,6 +49,9 @@ export function BrandMark({ name = 'DewSkill', logoUrl }) {
 
 export default function Header({ site }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [activeNav, setActiveNav] = useState('');
+  const isClickingRef = useRef(false);
+  const clickTimeoutRef = useRef(null);
 
   // Lock body scroll when drawer is open
   useEffect(() => {
@@ -71,9 +74,74 @@ export default function Header({ site }) {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
+  // Scrollspy: Tự động highlight mục menu khi cuộn trang
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    // Khởi tạo active theo hash ban đầu nếu có
+    if (window.location.hash && NAV.some((item) => item.href === window.location.hash)) {
+      setActiveNav(window.location.hash);
+    }
+
+    const sectionIds = NAV.map((item) => item.href.replace('#', ''));
+    let ticking = false;
+
+    const handleScroll = () => {
+      // Nếu người dùng vừa bấm menu, giữ trạng thái active đó cho tới khi animation cuộn kết thúc
+      if (isClickingRef.current) return;
+      if (ticking) return;
+      ticking = true;
+
+      window.requestAnimationFrame(() => {
+        const scrollY = window.scrollY;
+
+        // Nếu ở khu vực đầu trang (Hero), không active mục nào
+        if (scrollY < 180) {
+          setActiveNav('');
+          ticking = false;
+          return;
+        }
+
+        // Nếu cuộn gần hết trang (phần cuối: Nhận tư vấn)
+        if (window.innerHeight + scrollY >= document.documentElement.scrollHeight - 120) {
+          setActiveNav('#tu-van');
+          ticking = false;
+          return;
+        }
+
+        // Xác định section đang nằm trong tầm mắt người đọc (focal line = 200px)
+        let currentSection = '';
+        const focalLine = 200;
+
+        for (const id of sectionIds) {
+          const el = document.getElementById(id);
+          if (el) {
+            const rect = el.getBoundingClientRect();
+            if (rect.top <= focalLine && rect.bottom > focalLine) {
+              currentSection = `#${id}`;
+              break;
+            }
+          }
+        }
+
+        if (currentSection) {
+          setActiveNav(currentSection);
+        }
+        ticking = false;
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
+    };
+  }, []);
+
   const handleLogoClick = (e) => {
     if (typeof window !== 'undefined' && window.location.pathname === '/') {
       e.preventDefault();
+      setActiveNav('');
       setIsOpen(false);
       window.scrollTo({
         top: 0,
@@ -87,12 +155,21 @@ export default function Header({ site }) {
 
   const handleNavClick = (e, href) => {
     e.preventDefault();
+    setActiveNav(href);
     setIsOpen(false);
+
+    // Khóa scrollspy trong 900ms để giữ active mục vừa click trong suốt quá trình smooth scroll
+    isClickingRef.current = true;
+    if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
+    clickTimeoutRef.current = setTimeout(() => {
+      isClickingRef.current = false;
+    }, 900);
+
     const targetId = href.replace('#', '');
     const el = document.getElementById(targetId);
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
-      if (window.history.pushState) {
+      if (typeof window !== 'undefined' && window.history.pushState) {
         window.history.pushState(null, '', href);
       }
     }
@@ -128,17 +205,24 @@ export default function Header({ site }) {
           </div>
 
           {/* Desktop Navigation (Laptop & Large screens: lg:flex) */}
-          <nav className="hidden items-center gap-6 text-sm font-bold text-slate-600 lg:flex">
-            {NAV.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                onClick={(e) => handleNavClick(e, item.href)}
-                className="transition duration-150 hover:text-dew-600"
-              >
-                {item.label}
-              </a>
-            ))}
+          <nav className="hidden items-center gap-1 sm:gap-1.5 text-sm font-bold lg:flex">
+            {NAV.map((item) => {
+              const isActive = activeNav === item.href;
+              return (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  onClick={(e) => handleNavClick(e, item.href)}
+                  className={`relative px-3.5 py-1.5 rounded-full text-sm font-bold transition-all duration-200 cursor-pointer ${
+                    isActive
+                      ? 'bg-dew-600 text-white shadow-sm shadow-dew-600/30'
+                      : 'text-slate-600 hover:text-dew-700 hover:bg-dew-50'
+                  }`}
+                >
+                  {item.label}
+                </a>
+              );
+            })}
           </nav>
 
           {/* Right Action Buttons */}
@@ -213,20 +297,38 @@ export default function Header({ site }) {
           </p>
           {NAV.map((item) => {
             const Icon = item.icon;
+            const isActive = activeNav === item.href;
             return (
               <a
                 key={item.href}
                 href={item.href}
                 onClick={(e) => handleNavClick(e, item.href)}
-                className="group flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-bold text-slate-700 transition hover:bg-dew-50 hover:text-dew-700 active:scale-98"
+                className={`group flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-bold transition-all duration-200 cursor-pointer ${
+                  isActive
+                    ? 'bg-dew-600 text-white shadow-sm shadow-dew-600/25'
+                    : 'text-slate-700 hover:bg-dew-50 hover:text-dew-700'
+                }`}
               >
                 <div className="flex items-center gap-3">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-slate-600 transition group-hover:bg-dew-100 group-hover:text-dew-700">
+                  <span
+                    className={`flex h-8 w-8 items-center justify-center rounded-lg transition ${
+                      isActive
+                        ? 'bg-white/20 text-white'
+                        : 'bg-slate-100 text-slate-600 group-hover:bg-dew-100 group-hover:text-dew-700'
+                    }`}
+                  >
                     <Icon size={16} />
                   </span>
                   <span>{item.label}</span>
                 </div>
-                <ArrowRight size={14} className="text-slate-300 transition group-hover:text-dew-600 group-hover:translate-x-0.5" />
+                <ArrowRight
+                  size={14}
+                  className={`transition-transform duration-200 ${
+                    isActive
+                      ? 'text-white translate-x-1'
+                      : 'text-slate-300 group-hover:text-dew-600 group-hover:translate-x-1'
+                  }`}
+                />
               </a>
             );
           })}
