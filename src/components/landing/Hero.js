@@ -92,14 +92,14 @@ export default function Hero({ site }) {
         {/* Left Column: Heading & Value props */}
         <div className="reveal-left text-center lg:text-left">
           <span className="inline-flex items-center gap-2 rounded-full border border-dew-200 bg-white px-3.5 py-1 text-xs font-extrabold text-dew-700 shadow-xs">
-            <Sparkles size={14} className="text-amber-500" /> Tự học tin học có lộ trình
+            <Sparkles size={14} className="text-amber-500" /> {site?.heroBadge || 'Tự học tin học có lộ trình'}
           </span>
 
           <h1 className="mt-4 text-3xl font-black leading-tight tracking-tight text-ink sm:text-4xl md:text-5xl">
-            {site.heroTitle || 'Học tin học như chơi game, tự tin thành thạo cùng DewSkill'}
+            {site?.heroTitle || `Học tin học như chơi game, tự tin thành thạo cùng ${site?.brandName || 'DewSkill'}`}
           </h1>
 
-          {site.heroSubtitle ? (
+          {site?.heroSubtitle ? (
             <p className="mt-4 max-w-xl text-sm font-medium leading-relaxed text-slate-600 sm:text-base mx-auto lg:mx-0">
               {site.heroSubtitle}
             </p>
@@ -108,20 +108,20 @@ export default function Hero({ site }) {
           {/* CTA Buttons */}
           <div className="mt-6 sm:mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-3">
             <a href={lmsLink(site.lmsUrl, 'start')} className="btn-primary !px-5 sm:!px-6 !py-3 text-sm sm:text-base">
-              Vào luyện tập ngay <ArrowRight size={16} />
+              {site?.heroCtaPrimary || 'Vào luyện tập ngay'} <ArrowRight size={16} />
             </a>
             <a href="#trai-nghiem" className="btn-ghost !px-5 sm:!px-6 !py-3 text-sm sm:text-base">
-              Xem giao diện thực tế
+              {site?.heroCtaSecondary || 'Xem giao diện thực tế'}
             </a>
           </div>
 
           {/* Gamification tags */}
           <div className="mt-6 sm:mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-2.5 text-xs font-extrabold">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-50 border border-amber-200/60 px-3 py-1.5 text-amber-700">
-              <Zap size={14} /> Tích XP mỗi ngày
+              <Zap size={14} /> {site?.heroTag1 || 'Tích XP mỗi ngày'}
             </span>
             <span className="inline-flex items-center gap-1.5 rounded-full bg-orange-50 border border-orange-200/60 px-3 py-1.5 text-orange-700">
-              <Flame size={14} /> Giữ chuỗi ngày học
+              <Flame size={14} /> {site?.heroTag2 || 'Giữ chuỗi ngày học'}
             </span>
           </div>
         </div>
@@ -146,12 +146,21 @@ export default function Hero({ site }) {
 
           {/* Circular glass bubble - z-index: -2 */}
           <div
-            className="glass relative flex h-64 w-64 items-center justify-center rounded-full sm:h-80 sm:w-80 md:h-96 md:w-96 shadow-2xl shadow-dew-900/10 border border-white/90"
+            className="glass relative flex h-64 w-64 items-center justify-center rounded-full sm:h-80 sm:w-80 md:h-96 md:w-96 shadow-2xl shadow-dew-900/10 border border-white/90 p-6 overflow-hidden"
             style={{ zIndex: -2 }}
           >
-            <div className="h-48 w-48 sm:h-64 sm:w-64 md:h-72 md:w-72 flex items-center justify-center">
-              <Mascot name="doc-sach" size={240} className="animate-floaty" />
-            </div>
+            {site?.heroMascotImage ? (
+              /* eslint-disable-next-line @next/next/no-img-element */
+              <img
+                src={site.heroMascotImage}
+                alt={site?.brandName || 'Linh vật'}
+                className="h-full w-full object-contain animate-floaty"
+              />
+            ) : (
+              <div className="h-48 w-48 sm:h-64 sm:w-64 md:h-72 md:w-72 flex items-center justify-center">
+                <Mascot name="doc-sach" size={240} className="animate-floaty" />
+              </div>
+            )}
           </div>
 
           {/* Floating Badges (safely positioned within container boundaries) */}

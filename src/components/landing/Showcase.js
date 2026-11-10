@@ -80,11 +80,20 @@ export default function Showcase({ site, lmsUrl }) {
   const [activeTab, setActiveTab] = useState('path');
   const isPausedRef = useRef(false);
 
-  const tabs = TABS.map((tab) => {
-    if (tab.id === 'path') return { ...tab, image: site?.showcasePathImage || tab.image };
-    if (tab.id === 'video') return { ...tab, image: site?.showcaseVideoImage || tab.image };
-    if (tab.id === 'ai') return { ...tab, image: site?.showcaseAiImage || tab.image };
-    return tab;
+  const tabs = (site?.showcaseTabs && site.showcaseTabs.length > 0 ? site.showcaseTabs : TABS).map((tab, idx) => {
+    const base = TABS[idx] || TABS[0];
+    let image = tab.image || base.image;
+    if (tab.id === 'path' && site?.showcasePathImage) image = site.showcasePathImage;
+    if (tab.id === 'video' && site?.showcaseVideoImage) image = site.showcaseVideoImage;
+    if (tab.id === 'ai' && site?.showcaseAiImage) image = site.showcaseAiImage;
+
+    return {
+      ...base,
+      ...tab,
+      image,
+      points: Array.isArray(tab.points) && tab.points.length > 0 ? tab.points : base.points,
+      icon: base.icon,
+    };
   });
 
   const nextTab = useCallback(() => {
@@ -278,7 +287,7 @@ export default function Showcase({ site, lmsUrl }) {
           <div className="relative grid items-center gap-8 lg:grid-cols-[1.4fr_1fr]">
             <div>
               <span className="inline-flex items-center gap-2 rounded-full bg-white/20 px-3.5 py-1 text-xs font-black uppercase tracking-wider text-emerald-200 backdrop-blur">
-                <Zap size={14} className="text-amber-300" /> Bắt đầu không rủi ro
+                <Zap size={14} className="text-amber-300" /> {site?.ctaBadge || 'Bắt đầu không rủi ro'}
               </span>
               <h3 className="mt-4 text-2xl font-black leading-tight sm:text-3xl lg:text-4xl text-white">
                 {site?.ctaTitle || 'Học thử miễn phí ngay hôm nay!'}
@@ -289,15 +298,18 @@ export default function Showcase({ site, lmsUrl }) {
               </p>
 
               <div className="mt-6 flex flex-wrap gap-x-4 gap-y-2 text-xs font-bold text-dew-100">
-                <div className="flex items-center gap-1.5">
-                  <CheckCircle2 size={16} className="text-emerald-300 shrink-0" /> Miễn phí 100% tài khoản học thử
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <CheckCircle2 size={16} className="text-emerald-300 shrink-0" /> Tự do luyện tập câu hỏi mỗi ngày
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <CheckCircle2 size={16} className="text-emerald-300 shrink-0" /> Tích XP và duy trì ngọn lửa Streak
-                </div>
+                {(Array.isArray(site?.ctaPoints) && site.ctaPoints.length > 0
+                  ? site.ctaPoints
+                  : [
+                      'Miễn phí 100% tài khoản học thử',
+                      'Tự do luyện tập câu hỏi mỗi ngày',
+                      'Tích XP và duy trì ngọn lửa Streak',
+                    ]
+                ).map((point, pIdx) => (
+                  <div key={pIdx} className="flex items-center gap-1.5">
+                    <CheckCircle2 size={16} className="text-emerald-300 shrink-0" /> {point}
+                  </div>
+                ))}
               </div>
 
               <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -305,13 +317,13 @@ export default function Showcase({ site, lmsUrl }) {
                   href={lmsLink(lmsUrl, 'start')}
                   className="btn-drop bg-white px-6 py-3 sm:px-7 sm:py-3.5 text-sm sm:text-base font-black text-dew-800 shadow-xl hover:bg-dew-50 active:scale-95"
                 >
-                  Đăng ký học miễn phí ngay <ArrowRight size={18} />
+                  {site?.ctaPrimaryText || 'Đăng ký học miễn phí ngay'} <ArrowRight size={18} />
                 </a>
                 <a
                   href={lmsLink(lmsUrl, 'login')}
                   className="btn-drop border border-white/40 bg-white/10 px-5 py-3 text-xs sm:text-sm font-extrabold text-white backdrop-blur hover:bg-white/20"
                 >
-                  Đã có tài khoản? Đăng nhập
+                  {site?.ctaSecondaryText || 'Đã có tài khoản? Đăng nhập'}
                 </a>
               </div>
             </div>
@@ -332,14 +344,14 @@ export default function Showcase({ site, lmsUrl }) {
                   )}
                 </div>
                 <span className="glass absolute left-0 top-3 sm:-left-2 sm:top-4 rounded-full bg-amber-400 px-3 py-1 sm:px-3.5 sm:py-1.5 text-[11px] sm:text-xs font-black text-amber-950 shadow-md">
-                  ⚡ 0đ học thử
+                  {site?.ctaBadgeLeft || '⚡ 0đ học thử'}
                 </span>
                 <span className="glass absolute right-0 bottom-3 sm:-right-2 sm:bottom-4 rounded-full bg-white px-3 py-1 sm:px-3.5 sm:py-1.5 text-[11px] sm:text-xs font-black text-dew-800 shadow-md">
-                  🔥 Giữ chuỗi ngay
+                  {site?.ctaBadgeRight || '🔥 Giữ chuỗi ngay'}
                 </span>
               </div>
               <p className="mt-3 text-xs font-extrabold text-emerald-200">
-                Hơn 1.000+ học viên đã tham gia tự học mỗi ngày
+                {site?.ctaFooterNote || 'Hơn 1.000+ học viên đã tham gia tự học mỗi ngày'}
               </p>
             </div>
           </div>

@@ -25,6 +25,9 @@ async function writeJson(file, data) {
 
 export const newId = (prefix) => `${prefix}-${crypto.randomBytes(5).toString('hex')}`;
 
+import { DEFAULT_FEATURES_DATA, DEFAULT_JOURNEY_DATA, DEFAULT_SHOWCASE_DATA } from './landingDefaults';
+export { DEFAULT_FEATURES_DATA, DEFAULT_JOURNEY_DATA, DEFAULT_SHOWCASE_DATA };
+
 /* ---------- Cấu hình chung ---------- */
 const SITE_DEFAULTS = {
   lmsUrl: process.env.NEXT_PUBLIC_DEFAULT_LMS_URL || 'http://localhost:5173',
@@ -41,24 +44,40 @@ const SITE_DEFAULTS = {
   googlePlayUrl: '',
   heroTitle: 'Học tin học như chơi game cùng DewSkill',
   heroSubtitle: '',
+  heroBadge: 'Tự học tin học có lộ trình',
+  heroCtaPrimary: 'Vào luyện tập ngay',
+  heroCtaSecondary: 'Xem giao diện thực tế',
+  heroMascotImage: '',
   footerNote: '',
   // Section 1: Trải nghiệm (#trai-nghiem)
   showcaseTitle: 'Học tin học như chơi game, tiến bộ thấy rõ từng ngày',
   showcaseSubtitle: 'Ảnh chụp thực tế từ hệ sinh thái học tập: Chặng học rõ ràng, bài giảng video ngắn và AI chấm điểm tức thì.',
+  showcaseTabs: DEFAULT_SHOWCASE_DATA,
   showcasePathImage: '/screenshots/lo-trinh-chang.png',
   showcaseVideoImage: '/screenshots/video-bai-giang.png',
   showcaseAiImage: '/screenshots/ai-cham-diem.png',
+  ctaBadge: '⚡ Bắt đầu không rủi ro',
   ctaTitle: 'Học thử miễn phí ngay hôm nay!',
   ctaSubtitle: 'Tạo tài khoản nhanh chóng chỉ với số điện thoại để vào luyện tập các chặng mở đầu, xem video lý thuyết và tích lũy XP. Hoàn toàn không mất phí ban đầu.',
   ctaMascotImage: '',
+  ctaPoints: [
+    'Miễn phí 100% tài khoản học thử',
+    'Tự do luyện tập câu hỏi mỗi ngày',
+    'Tích XP và duy trì ngọn lửa Streak',
+  ],
+  ctaPrimaryText: 'Đăng ký học miễn phí ngay',
+  ctaSecondaryText: 'Đã có tài khoản? Đăng nhập',
 
   // Section 2: Tính năng (#tinh-nang)
+  featuresBadge: 'Phương pháp giáo dục tương tác 4.0',
   featuresTitle: 'Tự học mà vẫn có động lực',
   featuresSubtitle: 'Mỗi ngày 10 đến 15 phút là đủ để tiến bộ đều đặn với phương pháp sư phạm số thông minh.',
+  featuresCards: DEFAULT_FEATURES_DATA,
 
   // Section 3: Lộ trình (#lo-trinh)
   journeyTitle: 'Hành trình của bạn cùng giọt nước',
   journeySubtitle: 'Lộ trình 4 bước đơn giản từ người mới bắt đầu đến thành thạo tin học văn phòng.',
+  journeySteps: DEFAULT_JOURNEY_DATA,
 
   // Section 4: Poster & Tin (#poster)
   postersTitle: 'Poster và tin mới',
@@ -68,6 +87,7 @@ const SITE_DEFAULTS = {
   leadTitle: 'Cần bạn đồng hành?',
   leadSubtitle: 'Để lại số điện thoại, chúng tôi sẽ hướng dẫn bạn tạo tài khoản và bắt đầu lộ trình tự học.',
   leadImage: '',
+  leadButtonText: 'Gửi thông tin tư vấn',
   adminPassword: '',
   googleClientId: '',
   googleClientSecret: '',
@@ -139,15 +159,23 @@ export async function saveSite(patch) {
   const nextSecurity = await readJson('admin-security.json', {});
 
   for (const key of Object.keys(SITE_DEFAULTS)) {
+    if (patch[key] === undefined) continue;
+
     if (typeof patch[key] === 'string') {
       const val = patch[key].trim();
       next[key] = val;
       if (SECURITY_KEYS.includes(key)) {
         nextSecurity[key] = val;
       }
-    } else if (typeof patch[key] === 'boolean' && SECURITY_KEYS.includes(key)) {
+    } else if (typeof patch[key] === 'boolean') {
       next[key] = patch[key];
-      nextSecurity[key] = patch[key];
+      if (SECURITY_KEYS.includes(key)) {
+        nextSecurity[key] = patch[key];
+      }
+    } else if (Array.isArray(patch[key])) {
+      next[key] = patch[key];
+    } else if (typeof patch[key] === 'object' && patch[key] !== null) {
+      next[key] = patch[key];
     }
   }
 

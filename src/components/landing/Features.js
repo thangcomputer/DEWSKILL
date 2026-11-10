@@ -113,13 +113,28 @@ const FEATURES = [
 ];
 
 export default function Features({ site }) {
+  const cards = (site?.featuresCards && site.featuresCards.length > 0
+    ? site.featuresCards
+    : FEATURES
+  ).map((item, idx) => {
+    const base = FEATURES[idx] || FEATURES[0];
+    return {
+      ...base,
+      ...item,
+      points: Array.isArray(item.points) && item.points.length > 0 ? item.points : base.points,
+      accent: base.accent,
+      icon: base.icon,
+      categoryIcon: base.categoryIcon,
+    };
+  });
+
   return (
     <section id="tinh-nang" className="mx-auto max-w-6xl scroll-mt-24 px-4 py-10 sm:py-14">
       {/* Section Header chuẩn giáo dục */}
       <div className="reveal mx-auto max-w-3xl text-center">
         <div className="inline-flex items-center gap-2 rounded-full border border-dew-200/80 bg-dew-100/70 px-4 py-1.5 text-xs sm:text-sm font-bold text-dew-800 shadow-xs backdrop-blur-sm">
           <GraduationCap className="h-4 w-4 text-dew-700" />
-          <span>Phương pháp giáo dục tương tác 4.0</span>
+          <span>{site?.featuresBadge || 'Phương pháp giáo dục tương tác 4.0'}</span>
         </div>
         <h2 className="mt-4 text-2xl font-black tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
           {site?.featuresTitle || 'Tự học mà vẫn có động lực'}
@@ -132,11 +147,11 @@ export default function Features({ site }) {
 
       {/* Grid 4 Cards phong cách EdTech chuyên nghiệp */}
       <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:gap-8">
-        {FEATURES.map((item) => {
+        {cards.map((item) => {
           const Icon = item.icon;
           const CategoryIcon = item.categoryIcon;
           const { accent } = item;
-          const articleUrl = `/bai-viet/${item.slug}`;
+          const articleUrl = `/bai-viet/${item.slug || 'lo-trinh-hoc-tin-hoc-theo-tung-chang'}`;
 
           return (
             <article
@@ -164,7 +179,12 @@ export default function Features({ site }) {
                     className={`flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl bg-gradient-to-br ${accent.gradient} text-white shadow-lg ${accent.shadow} ring-4 ${accent.ring} transition-transform duration-300 group-hover:scale-105 group-hover:rotate-1`}
                     title={`Đọc bài viết: ${item.title}`}
                   >
-                    <Icon className="h-7 w-7 sm:h-8 sm:w-8" strokeWidth={2.2} />
+                    {item.iconUrl ? (
+                      /* eslint-disable-next-line @next/next/no-img-element */
+                      <img src={item.iconUrl} alt={item.title} className="h-8 w-8 sm:h-9 sm:w-9 object-contain" />
+                    ) : (
+                      <Icon className="h-7 w-7 sm:h-8 sm:w-8" strokeWidth={2.2} />
+                    )}
                   </Link>
 
                   {/* Badge danh mục sư phạm */}
