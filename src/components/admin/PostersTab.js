@@ -153,9 +153,9 @@ export default function PostersTab() {
         </div>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-[1.1fr_1fr]">
-        {/* Form nhập / sửa poster */}
-        <form onSubmit={save} className="glass grid h-fit gap-3 rounded-drop p-5">
+      <div className="grid gap-6 lg:grid-cols-3">
+        {/* Form nhập / sửa poster - Cột trái chiếm 2/3 */}
+        <form onSubmit={save} className="glass grid h-fit gap-3 rounded-drop p-6 lg:col-span-2">
           <div className="flex items-center justify-between">
             <h2 className="font-black text-ink">
               {form.id ? 'Sửa bài viết / poster' : 'Thêm poster / bài viết'}
@@ -312,8 +312,8 @@ export default function PostersTab() {
           </div>
         </form>
 
-        {/* Danh sách các poster & bài viết */}
-        <div className="space-y-3">
+        {/* Danh sách các poster & bài viết - Cột phải chiếm 1/3 */}
+        <div className="space-y-3 lg:col-span-1">
           <h3 className="text-sm font-black text-slate-700 uppercase tracking-wider">
             Danh sách bài viết & poster ({rows.length})
           </h3>

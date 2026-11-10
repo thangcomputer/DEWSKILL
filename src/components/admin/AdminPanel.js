@@ -24,7 +24,7 @@ export default function AdminPanel() {
   }
 
   return (
-    <main className="mx-auto max-w-5xl px-4 py-8">
+    <main className="mx-auto max-w-7xl px-4 py-8">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-black text-ink">Quản trị DewSkill</h1>
         <div className="flex gap-2">
