@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Upload, X, RefreshCw, Globe, Image as ImageIcon, Sparkles, Smartphone, Share2, HelpCircle, Key, Lock, ShieldCheck, Copy, Check, Eye, EyeOff, Layers, Map, Compass, Newspaper, MessageSquare, ChevronRight, CheckCircle2 } from 'lucide-react';
+import { Upload, X, RefreshCw, Globe, Image as ImageIcon, Sparkles, Smartphone, Share2, HelpCircle, Key, Lock, ShieldCheck, Copy, Check, Eye, EyeOff, Layers, Map, Compass, Newspaper, MessageSquare, ChevronRight, CheckCircle2, Bell } from 'lucide-react';
 import { adminFetch } from './adminFetch';
 import { DEFAULT_FEATURES_DATA, DEFAULT_JOURNEY_DATA, DEFAULT_SHOWCASE_DATA } from '@/lib/landingDefaults';
 
@@ -220,6 +220,26 @@ export default function SiteTab() {
 
   return (
     <form onSubmit={save} className="grid gap-6">
+      {/* BANNER ĐẾN TAB POPUP QUẢNG CÁO */}
+      <div className="flex items-center justify-between rounded-2xl bg-gradient-to-r from-emerald-500/10 via-teal-500/10 to-dew-500/10 p-4 border border-emerald-200">
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-600 text-white shadow-sm">
+            <Bell size={20} />
+          </div>
+          <div>
+            <h4 className="text-sm font-extrabold text-slate-900">Quản lý Popup Quảng cáo & Banner Trang chủ</h4>
+            <p className="text-xs text-slate-500">
+              {form.popup?.enabled ? (
+                <span className="text-emerald-600 font-bold">● Popup đang hoạt động</span>
+              ) : (
+                <span className="text-slate-400">○ Popup đang tắt</span>
+              )}
+              {' — '}Bấm vào tab &quot;Popup quảng cáo&quot; ở thanh menu phía trên để cài đặt thời gian xuất hiện, thời gian biến mất và liên kết nút bấm.
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* KHỐI 1: NHẬN DIỆN THƯƠNG HIỆU (LOGO, FAVICON, BẢN QUYỀN) */}
       <div className="glass rounded-drop p-6">
         <div className="mb-4 flex items-center gap-2 border-b border-dew-100 pb-3">

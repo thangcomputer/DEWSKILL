@@ -135,3 +135,19 @@ export const DEFAULT_SHOWCASE_DATA = [
   },
 ];
 
+export const DEFAULT_POPUP_DATA = {
+  enabled: false,
+  title: 'Ưu đãi học thử miễn phí hôm nay!',
+  subtitle: 'Đăng ký tài khoản ngay để nhận trọn bộ bài giảng tương tác và luyện tập cùng AI chấm điểm tức thì.',
+  imageUrl: '',
+  linkUrl: '',
+  buttonEnabled: true,
+  buttonText: 'Đăng ký ngay',
+  buttonLink: '/#tu-van',
+  openNewTab: false,
+  delaySeconds: 2,
+  autoCloseSeconds: 0,
+  showOncePerSession: true,
+};
+
+

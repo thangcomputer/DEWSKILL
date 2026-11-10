@@ -1,15 +1,17 @@
 'use client';
 
 import { useState } from 'react';
-import { Bot, LogOut, Megaphone, Settings, Users } from 'lucide-react';
+import { Bell, Bot, LogOut, Megaphone, Settings, Users } from 'lucide-react';
 import { adminFetch } from './adminFetch';
 import SiteTab from './SiteTab';
 import PostersTab from './PostersTab';
 import LeadsTab from './LeadsTab';
 import AiTrainingTab from './AiTrainingTab';
+import PopupTab from './PopupTab';
 
 const TABS = [
   { id: 'posters', label: 'Poster & bài viết', icon: Megaphone },
+  { id: 'popup', label: 'Popup quảng cáo', icon: Bell },
   { id: 'ai', label: 'Huấn luyện AI tư vấn', icon: Bot },
   { id: 'leads', label: 'Khách tư vấn', icon: Users },
   { id: 'site', label: 'Cấu hình', icon: Settings },
@@ -54,6 +56,7 @@ export default function AdminPanel() {
 
       <div className="mt-6">
         {tab === 'posters' && <PostersTab />}
+        {tab === 'popup' && <PopupTab />}
         {tab === 'ai' && <AiTrainingTab />}
         {tab === 'leads' && <LeadsTab />}
         {tab === 'site' && <SiteTab />}

@@ -25,8 +25,8 @@ async function writeJson(file, data) {
 
 export const newId = (prefix) => `${prefix}-${crypto.randomBytes(5).toString('hex')}`;
 
-import { DEFAULT_FEATURES_DATA, DEFAULT_JOURNEY_DATA, DEFAULT_SHOWCASE_DATA } from './landingDefaults';
-export { DEFAULT_FEATURES_DATA, DEFAULT_JOURNEY_DATA, DEFAULT_SHOWCASE_DATA };
+import { DEFAULT_FEATURES_DATA, DEFAULT_JOURNEY_DATA, DEFAULT_SHOWCASE_DATA, DEFAULT_POPUP_DATA } from './landingDefaults';
+export { DEFAULT_FEATURES_DATA, DEFAULT_JOURNEY_DATA, DEFAULT_SHOWCASE_DATA, DEFAULT_POPUP_DATA };
 
 /* ---------- Cấu hình chung ---------- */
 const SITE_DEFAULTS = {
@@ -88,6 +88,10 @@ const SITE_DEFAULTS = {
   leadSubtitle: 'Để lại số điện thoại, chúng tôi sẽ hướng dẫn bạn tạo tài khoản và bắt đầu lộ trình tự học.',
   leadImage: '',
   leadButtonText: 'Gửi thông tin tư vấn',
+
+  // Popup quảng cáo trang chủ
+  popup: DEFAULT_POPUP_DATA,
+
   adminPassword: '',
   googleClientId: '',
   googleClientSecret: '',
@@ -150,7 +154,12 @@ const SECURITY_KEYS = [
 export async function getSite() {
   const siteData = await readJson('site.json', {});
   const securityData = await readJson('admin-security.json', {});
-  return { ...SITE_DEFAULTS, ...siteData, ...securityData };
+  return {
+    ...SITE_DEFAULTS,
+    ...siteData,
+    ...securityData,
+    popup: { ...DEFAULT_POPUP_DATA, ...(siteData.popup || {}) },
+  };
 }
 
 export async function saveSite(patch) {
@@ -172,10 +181,16 @@ export async function saveSite(patch) {
       if (SECURITY_KEYS.includes(key)) {
         nextSecurity[key] = patch[key];
       }
+    } else if (typeof patch[key] === 'number') {
+      next[key] = patch[key];
     } else if (Array.isArray(patch[key])) {
       next[key] = patch[key];
     } else if (typeof patch[key] === 'object' && patch[key] !== null) {
-      next[key] = patch[key];
+      if (key === 'popup') {
+        next.popup = { ...(current.popup || DEFAULT_POPUP_DATA), ...patch.popup };
+      } else {
+        next[key] = patch[key];
+      }
     }
   }
 

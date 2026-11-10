@@ -7,6 +7,7 @@ import Posters from '@/components/landing/Posters';
 import LeadForm from '@/components/landing/LeadForm';
 import Footer from '@/components/landing/Footer';
 import AiChatWidget from '@/components/landing/AiChatWidget';
+import PromoPopup from '@/components/landing/PromoPopup';
 import ScrollReveal from '@/components/landing/ScrollReveal';
 import { getSite, listPosters } from '@/lib/store';
 
@@ -18,6 +19,7 @@ export default async function HomePage() {
   return (
     <>
       <ScrollReveal />
+      <PromoPopup popup={site.popup} lmsUrl={site.lmsUrl} />
       <Header site={site} />
       <main>
         <Hero site={site} />

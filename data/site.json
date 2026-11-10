@@ -13,24 +13,181 @@
   "googlePlayUrl": "https://play.google.com",
   "heroTitle": "Học tin học như chơi game, tự tin thành thạo cùng DewSkill",
   "heroSubtitle": "Lộ trình rõ ràng, tích XP mỗi ngày, video ngắn có câu hỏi ngay trong bài và chấm điểm tức thì. Chú giọt nước luôn học cùng bạn.",
+  "heroBadge": "Tự học tin học có lộ trình",
+  "heroCtaPrimary": "Vào luyện tập ngay",
+  "heroCtaSecondary": "Xem giao diện thực tế",
+  "heroMascotImage": "",
   "footerNote": "DewSkill là nền tảng tự học tin học thế hệ mới. Học qua thực hành, video tương tác và trợ lý AI đồng hành từng chặng.",
   "showcaseTitle": "Học tin học như chơi game, tiến bộ thấy rõ từng ngày",
   "showcaseSubtitle": "Ảnh chụp thực tế từ hệ sinh thái học tập: Chặng học rõ ràng, bài giảng video ngắn và AI chấm điểm tức thì.",
+  "showcaseTabs": [
+    {
+      "id": "path",
+      "shortTitle": "Lộ trình từng chặng",
+      "badge": "Chặng học thông minh",
+      "title": "Học theo từng chặng",
+      "desc": "Lộ trình chia nhỏ khoa học. Mỗi chặng là một bước tiến vững chắc: học lý thuyết, xem video và hoàn thành bài tập kiểm tra để mở khóa chặng tiếp theo.",
+      "points": [
+        "Bản đồ trạm học tuần tự: Học chắc bài trước mới mở bài sau",
+        "Có trạm thử thách vượt chặng nếu bạn đã có nền tảng",
+        "Linh vật giọt nước chúc mừng và ghi dấu mỗi khi bạn về đích"
+      ],
+      "image": "/screenshots/lo-trinh-chang.png"
+    },
+    {
+      "id": "video",
+      "shortTitle": "Video theo bài",
+      "badge": "Học bài tương tác",
+      "title": "Video ngắn có câu hỏi dừng bài",
+      "desc": "Không còn những video dài hàng tiếng gây buồn ngủ. Mỗi bài giảng là video ngắn 3 - 5 phút súc tích, thực hành trực quan và tự động dừng ở mốc quan trọng để bạn trả lời.",
+      "points": [
+        "Lý thuyết chắt lọc cô đọng, đi thẳng vào thao tác thực tế",
+        "Câu hỏi tương tác dừng ngay trong video: Trả lời đúng mới xem tiếp",
+        "Không tua qua phần chưa học, đảm bảo nắm chắc từng kiến thức"
+      ],
+      "image": "/screenshots/video-bai-giang.png"
+    },
+    {
+      "id": "ai",
+      "shortTitle": "AI chấm điểm & Gợi ý",
+      "badge": "Công nghệ thông minh",
+      "title": "AI chấm điểm & Gợi ý tức thì",
+      "desc": "Làm bài xong có kết quả ngay lập tức chỉ sau 1 giây. AI phân tích đáp án, khen ngợi khi bạn làm đúng và đưa ra gợi ý tư duy logic khi gặp câu hỏi hóc búa.",
+      "points": [
+        "Chấm điểm tự động tức thì cho đủ các dạng bài tập thực hành",
+        "Tích lũy XP sau mỗi câu đúng để tăng cấp và đua bảng xếp hạng",
+        "Nút gợi ý thông minh giúp bạn tự tư duy mà không lộ ngay đáp án"
+      ],
+      "image": "/screenshots/ai-cham-diem.png"
+    }
+  ],
   "showcasePathImage": "/api/uploads/1794297007112-f8956ed7.png",
   "showcaseVideoImage": "/api/uploads/1794297210165-aca285cb.png",
   "showcaseAiImage": "/api/uploads/1794297123195-504b0d45.png",
+  "ctaBadge": "⚡ Bắt đầu không rủi ro",
   "ctaTitle": "Học thử miễn phí ngay hôm nay!",
   "ctaSubtitle": "Tạo tài khoản nhanh chóng chỉ với số điện thoại để vào luyện tập các chặng mở đầu, xem video lý thuyết và tích lũy XP. Hoàn toàn không mất phí ban đầu.",
   "ctaMascotImage": "/api/uploads/1794297283396-2ba46430.gif",
+  "ctaPoints": [
+    "Miễn phí 100% tài khoản học thử",
+    "Tự do luyện tập câu hỏi mỗi ngày",
+    "Tích XP và duy trì ngọn lửa Streak"
+  ],
+  "ctaPrimaryText": "Đăng ký học miễn phí ngay",
+  "ctaSecondaryText": "Đã có tài khoản? Đăng nhập",
+  "featuresBadge": "Phương pháp giáo dục tương tác 4.0",
   "featuresTitle": "Tự học mà vẫn có động lực",
   "featuresSubtitle": "Mỗi ngày 10 đến 15 phút là đủ để tiến bộ đều đặn với phương pháp sư phạm số thông minh.",
+  "featuresCards": [
+    {
+      "id": "feature-1",
+      "slug": "lo-trinh-hoc-tin-hoc-theo-tung-chang",
+      "category": "Lộ trình bài bản",
+      "title": "Lộ trình từng chặng",
+      "text": "Bài học chia nhỏ theo chặng. Xong bước này mới mở bước tiếp theo, học chắc từng phần. Đã biết rồi thì làm bài kiểm tra để vượt chặng.",
+      "points": [
+        "Chia nhỏ bài học từ căn bản đến chuyên sâu",
+        "Mở khóa từng chặng, học đến đâu chắc đến đó",
+        "Linh hoạt làm bài kiểm tra vượt chặng nhanh chóng"
+      ],
+      "meta": "Chuẩn sư phạm thực chiến",
+      "iconUrl": ""
+    },
+    {
+      "id": "feature-2",
+      "slug": "tich-luy-xp-cap-do-va-chuoi-ngay-hoc-tap",
+      "category": "Gamification & Động lực",
+      "title": "XP, cấp độ và chuỗi ngày",
+      "text": "Mỗi lượt luyện cộng XP, giữ chuỗi ngày học để lên cấp, nhận huy hiệu và có tên trên bảng xếp hạng tuần, tháng.",
+      "points": [
+        "Cộng điểm XP và thăng hạng liên tục sau mỗi câu đúng",
+        "Duy trì chuỗi ngày (Streak) rèn tính kỷ luật tự học",
+        "Mở khóa huy hiệu và tranh tài trên bảng vàng thành tích"
+      ],
+      "meta": "Học hào hứng như chơi game",
+      "iconUrl": ""
+    },
+    {
+      "id": "feature-3",
+      "slug": "video-ngan-co-cau-hoi-trong-bai-giang",
+      "category": "Tương tác Micro-Learning",
+      "title": "Video ngắn có câu hỏi trong bài",
+      "text": "Video dừng đúng chỗ quan trọng để bạn trả lời nhanh. Làm sai được gợi ý, không phải xem lại cả bài.",
+      "points": [
+        "Bài giảng 3 - 5 phút súc tích, vào thẳng trọng tâm thao tác",
+        "Tự động dừng câu hỏi tương tác: trả lời đúng mới đi tiếp",
+        "Hướng dẫn sửa sai tại chỗ, không phải xem lại cả video"
+      ],
+      "meta": "Tập trung cao độ, tiếp thu tức thì",
+      "iconUrl": ""
+    },
+    {
+      "id": "feature-4",
+      "slug": "cham-diem-va-goi-y-tuc-thi-cong-nghe-ai",
+      "category": "AI Trợ giảng 24/7",
+      "title": "Chấm điểm và gợi ý tức thì",
+      "text": "Trắc nghiệm, điền khuyết, sắp xếp thao tác, nối cột, đúng sai. Có kết quả ngay, có gợi ý mà không lộ đáp án.",
+      "points": [
+        "Trả kết quả và điểm số chi tiết ngay sau 1 giây",
+        "Đa dạng 5 dạng bài thực hành chuẩn thi chứng chỉ tin học",
+        "Gợi ý tư duy sư phạm giúp hiểu bản chất, không lộ đáp án"
+      ],
+      "meta": "Phản hồi tức thì, nhớ bài tại chỗ",
+      "iconUrl": ""
+    }
+  ],
   "journeyTitle": "Hành trình của bạn cùng Dewskill",
   "journeySubtitle": "Lộ trình 4 bước đơn giản từ người mới bắt đầu đến thành thạo tin học văn phòng.",
+  "journeySteps": [
+    {
+      "n": 1,
+      "title": "Tạo tài khoản",
+      "text": "Đăng ký trên hệ thống học, vào học ngay không cần chờ duyệt.",
+      "mascot": "cam-xuc-hoc-bai",
+      "image": ""
+    },
+    {
+      "n": 2,
+      "title": "Học theo chặng",
+      "text": "Đọc lý thuyết ngắn, xem video, trả lời câu hỏi kiểm tra nhanh.",
+      "mascot": "doc-sach",
+      "image": ""
+    },
+    {
+      "n": 3,
+      "title": "Luyện tập mỗi ngày",
+      "text": "Làm bài luyện, nhận XP, giữ chuỗi ngày và leo bảng xếp hạng.",
+      "mascot": "nang-dong",
+      "image": ""
+    },
+    {
+      "n": 4,
+      "title": "Vượt chặng",
+      "text": "Hoàn thành chặng để mở chặng mới, nhận huy hiệu ghi dấu tiến bộ.",
+      "mascot": "tot-nghiep-vui-ve",
+      "image": ""
+    }
+  ],
   "postersTitle": "Poster và tin mới",
   "postersSubtitle": "Ưu đãi, mẹo học và thông báo mới nhất.",
   "leadTitle": "Cần bạn đồng hành?",
   "leadSubtitle": "Để lại số điện thoại, chúng tôi sẽ hướng dẫn bạn tạo tài khoản và bắt đầu lộ trình tự học.",
   "leadImage": "",
+  "leadButtonText": "Gửi thông tin tư vấn",
+  "popup": {
+    "enabled": true,
+    "title": "Ưu đãi học thử miễn phí hôm nay!",
+    "subtitle": "Đăng ký tài khoản ngay để nhận trọn bộ bài giảng tương tác và luyện tập cùng AI chấm điểm tức thì.",
+    "imageUrl": "/api/uploads/1794286314601-3024f6f9.png",
+    "linkUrl": "/#tu-van",
+    "buttonEnabled": true,
+    "buttonText": "Đăng ký ngay",
+    "buttonLink": "/#tu-van",
+    "openNewTab": false,
+    "delaySeconds": 2,
+    "autoCloseSeconds": 0,
+    "showOncePerSession": true
+  },
   "adminPassword": "",
   "googleClientId": "",
   "googleClientSecret": "",
@@ -38,5 +195,5 @@
   "facebookAppSecret": "",
   "adminTotpSecret": "",
   "adminTotpEnabled": false,
-  "updatedAt": 1794297393636
+  "updatedAt": 1794298856028
 }
