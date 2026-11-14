@@ -20,21 +20,31 @@ function updateRootEnv(key, val) {
   }
 }
 
+function sanitizeSiteForAdmin(site) {
+  return {
+    ...site,
+    hasAdminPassword: Boolean(site.adminPassword),
+    adminPassword: '',
+    adminTotpSecret: '',
+    hasGoogleAuth: Boolean(site.googleClientId && site.googleClientSecret),
+    googleClientSecret: '',
+    hasFacebookAuth: Boolean(site.facebookAppId && site.facebookAppSecret),
+    facebookAppSecret: '',
+  };
+}
+
 export const GET = adminRoute(async () => {
   const site = await getSite();
-  return ok({
-    data: {
-      ...site,
-      hasAdminPassword: Boolean(site.adminPassword),
-      adminPassword: '',
-      hasGoogleAuth: Boolean(site.googleClientId && site.googleClientSecret),
-    },
-  });
+  return ok({ data: sanitizeSiteForAdmin(site) });
 });
 
 export const PUT = adminRoute(async (request) => {
   const body = await request.json();
   const current = await getSite();
+
+  // Không cho ghi đè trạng thái 2FA qua endpoint cấu hình chung (phải qua /api/admin/2fa)
+  delete body.adminTotpSecret;
+  delete body.adminTotpEnabled;
 
   if (typeof body.adminPassword === 'string') {
     const trimmed = body.adminPassword.trim();
@@ -50,6 +60,14 @@ export const PUT = adminRoute(async (request) => {
     body.adminPassword = current.adminPassword || '';
   }
 
+  // Giữ nguyên secret OAuth cũ nếu form gửi chuỗi rỗng (đã ẩn ở GET)
+  if (typeof body.googleClientSecret === 'string' && !body.googleClientSecret.trim()) {
+    body.googleClientSecret = current.googleClientSecret || '';
+  }
+  if (typeof body.facebookAppSecret === 'string' && !body.facebookAppSecret.trim()) {
+    body.facebookAppSecret = current.facebookAppSecret || '';
+  }
+
   if (typeof body.googleClientId === 'string' && body.googleClientId.trim()) {
     updateRootEnv('GOOGLE_CLIENT_ID', body.googleClientId.trim());
     process.env.GOOGLE_CLIENT_ID = body.googleClientId.trim();
@@ -60,13 +78,6 @@ export const PUT = adminRoute(async (request) => {
   }
 
   const saved = await saveSite(body);
-  return ok({
-    data: {
-      ...saved,
-      hasAdminPassword: Boolean(saved.adminPassword),
-      adminPassword: '',
-      hasGoogleAuth: Boolean(saved.googleClientId && saved.googleClientSecret),
-    },
-  });
+  return ok({ data: sanitizeSiteForAdmin(saved) });
 });
 

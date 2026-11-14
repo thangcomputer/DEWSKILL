@@ -1753,7 +1753,7 @@ export default function SiteTab() {
               8. Cấu hình Đăng nhập Google (Google Authentication)
             </h3>
           </div>
-          {form.googleClientId && form.googleClientSecret ? (
+          {form.googleClientId && (form.hasGoogleAuth || form.googleClientSecret) ? (
             <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-bold text-emerald-700 border border-emerald-200">
               <ShieldCheck size={13} className="text-emerald-600" />
               Google OAuth sẵn sàng hoạt động
@@ -1779,8 +1779,9 @@ export default function SiteTab() {
             <button
               type="button"
               onClick={() => {
-                const origin = typeof window !== 'undefined' ? window.location.origin.replace(':3100', ':5000') : 'http://localhost:5000';
-                const uri = `${origin}/api/auth/free-portal/google/callback`;
+                const lmsOrigin = String(form.lmsUrl || '').trim().replace(/\/+$/, '');
+                const fallbackOrigin = typeof window !== 'undefined' ? window.location.origin.replace(':3100', ':5000') : 'http://localhost:5000';
+                const uri = `${lmsOrigin || fallbackOrigin}/api/auth/free-portal/google/callback`;
                 navigator.clipboard.writeText(uri);
                 setCopiedUri(true);
                 setTimeout(() => setCopiedUri(false), 2000);
@@ -1792,9 +1793,8 @@ export default function SiteTab() {
             </button>
           </div>
           <code className="block rounded-lg bg-white px-2.5 py-1.5 text-xs font-mono font-bold text-slate-800 border border-sky-200 select-all">
-            {typeof window !== 'undefined'
-              ? `${window.location.origin.replace(':3100', ':5000')}/api/auth/free-portal/google/callback`
-              : 'http://localhost:5000/api/auth/free-portal/google/callback'}
+            {(String(form.lmsUrl || '').trim().replace(/\/+$/, ''))
+              || (typeof window !== 'undefined' ? window.location.origin.replace(':3100', ':5000') : 'http://localhost:5000')}/api/auth/free-portal/google/callback
           </code>
         </div>
 

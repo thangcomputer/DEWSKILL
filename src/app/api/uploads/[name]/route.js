@@ -23,9 +23,15 @@ export async function GET(_request, { params }) {
   if (!type) return new Response('Not found', { status: 404 });
   try {
     const buffer = await fs.readFile(path.join(UPLOAD_DIR, name));
-    return new Response(buffer, {
-      headers: { 'Content-Type': type, 'Cache-Control': 'public, max-age=86400' },
-    });
+    const headers = {
+      'Content-Type': type,
+      'Cache-Control': 'public, max-age=86400',
+      'X-Content-Type-Options': 'nosniff',
+    };
+    if (type === 'image/svg+xml') {
+      headers['Content-Security-Policy'] = "sandbox; default-src 'none'; style-src 'unsafe-inline'";
+    }
+    return new Response(buffer, { headers });
   } catch {
     return new Response('Not found', { status: 404 });
   }

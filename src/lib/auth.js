@@ -1,5 +1,7 @@
 /** Đăng nhập admin: mật khẩu trong .env, cookie ký HMAC (không cần database). */
 import crypto from 'crypto';
+import fs from 'fs';
+import path from 'path';
 import { cookies } from 'next/headers';
 
 import { getSite } from './store';
@@ -7,9 +9,30 @@ import { verifyTotpToken } from './totp';
 
 const COOKIE = 'dew_admin';
 const MAX_AGE_SEC = 60 * 60 * 12;
+let cachedRuntimeSecret = '';
 
 function secret() {
-  return process.env.ADMIN_SECRET || 'dev-only-secret-change-me';
+  if (process.env.ADMIN_SECRET && process.env.ADMIN_SECRET !== 'dev-only-secret-change-me') {
+    return process.env.ADMIN_SECRET;
+  }
+  if (cachedRuntimeSecret) return cachedRuntimeSecret;
+  try {
+    const secretFile = path.join(process.cwd(), 'data', '.admin-secret');
+    if (fs.existsSync(secretFile)) {
+      const existing = fs.readFileSync(secretFile, 'utf8').trim();
+      if (existing.length >= 32) {
+        cachedRuntimeSecret = existing;
+        return cachedRuntimeSecret;
+      }
+    }
+    fs.mkdirSync(path.dirname(secretFile), { recursive: true });
+    cachedRuntimeSecret = crypto.randomBytes(32).toString('hex');
+    fs.writeFileSync(secretFile, cachedRuntimeSecret, { encoding: 'utf8', mode: 0o600 });
+    return cachedRuntimeSecret;
+  } catch {
+    cachedRuntimeSecret = crypto.randomBytes(32).toString('hex');
+    return cachedRuntimeSecret;
+  }
 }
 
 function sign(value) {

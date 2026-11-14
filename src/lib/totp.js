@@ -2,8 +2,8 @@ import crypto from 'crypto';
 
 const BASE32_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
 
-/** Tạo chuỗi secret Base32 ngẫu nhiên cho Google Authenticator */
-export function generateTotpSecret(length = 20) {
+/** Tạo chuỗi secret Base32 ngẫu nhiên cho Google Authenticator (32 ký tự = 160 bit = 20 byte) */
+export function generateTotpSecret(length = 32) {
   const bytes = crypto.randomBytes(length);
   let base32 = '';
   for (let i = 0; i < bytes.length; i++) {
@@ -68,5 +68,6 @@ export function verifyTotpToken(secret, token, window = 1) {
 
 /** Tạo URI định dạng otpauth chuẩn để quét QR code */
 export function getTotpUri(secret, accountName = 'admin', issuer = 'DewSkill') {
-  return `otpauth://totp/${encodeURIComponent(issuer)}:${encodeURIComponent(accountName)}?secret=${secret}&issuer=${encodeURIComponent(issuer)}&digits=6&period=30`;
+  const cleanIssuer = String(issuer || 'DewSkill').replace(/:/g, ' ').trim() || 'DewSkill';
+  return `otpauth://totp/${encodeURIComponent(cleanIssuer)}:${encodeURIComponent(accountName)}?secret=${secret}&issuer=${encodeURIComponent(cleanIssuer)}&algorithm=SHA1&digits=6&period=30`;
 }

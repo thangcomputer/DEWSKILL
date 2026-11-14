@@ -6,4 +6,5 @@ node_modules
 data/leads.json
 data/uploads/
 data/admin-security.json
+data/.admin-secret
 
